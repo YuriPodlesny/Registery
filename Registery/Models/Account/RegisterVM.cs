@@ -40,8 +40,11 @@ namespace Registery.Models.Account
         public string LastName { get; set; } = null!;
 
         [Required]
+        [Display(Name = "Роль")]
         public string Role { get;set; } = null!;
 
+        [Required]
+        [Display(Name = "Организация")]
         public Guid? OrganizationId { get; set; }
     }
 }

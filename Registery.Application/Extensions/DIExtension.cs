@@ -27,6 +27,7 @@ using Registery.Application.ComandAndQuery.RosreestrStatuses.Commands.UpdateRosr
 using Registery.Application.ComandAndQuery.RosreestrStatuses.Queries.GetRosreestrStatus;
 using Registery.Application.ComandAndQuery.RosreestrStatuses.Queries.GetRosreestrStatuses;
 using Registery.Application.Models;
+using Registry.Domain.Entities;
 
 namespace Registery.Application.Extensions
 {
@@ -51,7 +52,7 @@ namespace Registery.Application.Extensions
                 .AddScoped<IRequestHandler<DeleteOrganizationCommand, APIResponse>, DeleteOrganizationCommandHandler>()
                 .AddScoped<IRequestHandler<UpdateOrganizationCommand, APIResponse>, UpdateOrganizationCommandHandler>()
                 .AddScoped<IRequestHandler<GetOrganizationByIdQuery, APIResponse>, GetOrganizationByIdQueryHandler>()
-                .AddScoped<IRequestHandler<GetOrganizationsQuery, APIResponse>, GetOrganizationsQueryHandler>()
+                .AddScoped<IRequestHandler<GetOrganizationsQuery, List<Organization>>, GetOrganizationsQueryHandler>()
                 .AddScoped<IRequestHandler<AddRosreestrStatusCommand, APIResponse>, AddRosreestrStatusCommandHandler>()
                 .AddScoped<IRequestHandler<DeleteRosreestrStatusCommand, APIResponse>, DeleteRosreestrStatusCommandHandler>()
                 .AddScoped<IRequestHandler<UpdateRosreestrStatusCommand, APIResponse>, UpdateRosreestrStatusCommandHandler>()

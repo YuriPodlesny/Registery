@@ -6,27 +6,68 @@ using Registery.Models;
 using System.Diagnostics;
 using Registery.Application;
 using static Registery.Application.SD;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using MediatR;
+using Registery.Application.ComandAndQuery.Organizations.Queries.GetOrganization;
+using Registery.Application.ComandAndQuery.Organizations.Queries.GetOrganizations;
+using AutoMapper;
 
 namespace Registery.Controllers
 {
     public class AccountController : Controller
     {
         private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<User> _userManager;
+        private readonly IMediator _mediator;
+        private readonly IMapper _mapper;
 
-        public AccountController(SignInManager<User> signInManager)
+        public AccountController(SignInManager<User> signInManager, UserManager<User> userManager, IMediator mediator, IMapper mapper)
         {
             _signInManager = signInManager;
+            _userManager = userManager;
+            _mediator = mediator;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public IActionResult Register()
+        public async Task<IActionResult> Register()
         {
+            var organizations = await _mediator.Send(new GetOrganizationsQuery(), CancellationToken.None);
+            List<SelectListItem> organizationsSelectList = organizations
+                .Select(x =>
+                    new SelectListItem
+                    {
+                        Text = x.Name,
+                        Value = x.Id.ToString()
+                    }
+                ).Distinct().ToList();
+            ViewBag.organizationsSelectList = organizationsSelectList;
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Register(RegisterVM registerVM)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(registerVM);
+            }
+
+            var user = _mapper.Map<User>(registerVM);
+            var result = await _userManager.CreateAsync(user, registerVM.Password);
+
+            if (result.Succeeded)
+            {
+                return RedirectToAction(nameof(Index), "Home");
+            }
+            else
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+            }
+
             return View(registerVM);
         }
 

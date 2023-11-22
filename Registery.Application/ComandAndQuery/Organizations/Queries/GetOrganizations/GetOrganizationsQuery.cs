@@ -9,5 +9,5 @@ using System.Threading.Tasks;
 
 namespace Registery.Application.ComandAndQuery.Organizations.Queries.GetOrganizations
 {
-    public record GetOrganizationsQuery : IRequest<APIResponse>;
+    public record GetOrganizationsQuery : IRequest<List<Organization>>;
 }

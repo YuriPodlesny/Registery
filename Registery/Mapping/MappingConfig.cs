@@ -14,9 +14,11 @@ using Registery.Application.Mapping.FormDTO;
 using Registery.Application.Mapping.OMSStatusDTO;
 using Registery.Application.Mapping.OrganizationDTO;
 using Registery.Application.Mapping.RosreestrStatusDTO;
+using Registery.Domain.Entities;
+using Registery.Models.Account;
 using Registry.Domain.Entities;
 
-namespace Registery.Application.Mapping
+namespace Registery.Mapping
 {
     public class MappingConfig : Profile
     {
@@ -43,6 +45,8 @@ namespace Registery.Application.Mapping
             CreateMap<Form, AddFormCommand>().ReverseMap();
             CreateMap<Form, UpdateFormCommand>().ReverseMap();
             CreateMap<Form, FormCreateDto>().ReverseMap();
+
+            CreateMap<User, RegisterVM>().ReverseMap();
         }
     }
 }
