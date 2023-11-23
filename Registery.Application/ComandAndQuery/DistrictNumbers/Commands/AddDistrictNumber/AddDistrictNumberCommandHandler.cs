@@ -8,46 +8,27 @@ using System.Net;
 
 namespace Registery.Application.ComandAndQuery.DistrictNumbers.Commands.AddDistrictNumber
 {
-    public class AddDistrictNumberCommandHandler : IRequestHandler<AddDistrictNumberCommand, APIResponse>
+    public class AddDistrictNumberCommandHandler : IRequestHandler<AddDistrictNumberCommand, DistrictNumberDto>
     {
         private readonly IBaseDbContext _db;
         private readonly IMapper _mapper;
-        protected APIResponse _response;
 
         public AddDistrictNumberCommandHandler(IBaseDbContext db, IMapper mapper)
         {
             _db = db;
-            _response = new();
             _mapper = mapper;
         }
 
-        public async Task<APIResponse> Handle(AddDistrictNumberCommand request, CancellationToken cancellationToken)
+        public async Task<DistrictNumberDto> Handle(AddDistrictNumberCommand request, CancellationToken cancellationToken)
         {
-            try
-            {
-                if (request == null)
-                {
-                    _response.StatusCode = HttpStatusCode.BadRequest;
-                    return _response;
-                }
 
-                var districtNamber = new DistrictNumber
-                {
-                    Value = request.Value
-                };
+            var districtNamber = _mapper.Map<DistrictNumber>(request);
 
-                await _db.DistrictNumbers.AddAsync(districtNamber, cancellationToken);
-                await _db.SaveChangesAsync(cancellationToken);
+            await _db.DistrictNumbers.AddAsync(districtNamber, cancellationToken);
+            await _db.SaveChangesAsync(cancellationToken);
 
-                _response.Result = _mapper.Map<DistrictNumberDto>(districtNamber);
-            }
-            catch (Exception ex)
-            {
-                _response.IsSuccess = false;
-                _response.ErrorMessages = new List<string>() { ex.ToString() };
-            }
+            return _mapper.Map<DistrictNumberDto>(districtNamber);
 
-            return _response;
         }
     }
 }

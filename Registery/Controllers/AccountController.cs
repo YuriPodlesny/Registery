@@ -1,16 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Registery.Application.ComandAndQuery.Organizations.Queries.GetOrganizations;
 using Registery.Domain.Entities;
 using Registery.Models.Account;
-using Registery.Models;
-using System.Diagnostics;
-using Registery.Application;
-using static Registery.Application.SD;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using MediatR;
-using Registery.Application.ComandAndQuery.Organizations.Queries.GetOrganization;
-using Registery.Application.ComandAndQuery.Organizations.Queries.GetOrganizations;
-using AutoMapper;
 
 namespace Registery.Controllers
 {

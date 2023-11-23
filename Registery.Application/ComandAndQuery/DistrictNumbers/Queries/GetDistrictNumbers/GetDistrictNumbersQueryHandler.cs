@@ -9,43 +9,26 @@ using System.Net;
 
 namespace Registery.Application.ComandAndQuery.DistrictNumbers.Queries.GetDistrictNumbers
 {
-    public class GetDistrictNambersQueryHandler : IRequestHandler<GetDistrictNumbersQuery, APIResponse>
+    public class GetDistrictNambersQueryHandler : IRequestHandler<GetDistrictNumbersQuery, List<DistrictNumberDto>>
     {
         private readonly IBaseDbContext _db;
-        protected APIResponse _response;
         private readonly IMapper _mapper;
         public GetDistrictNambersQueryHandler(IBaseDbContext db, IMapper mapper)
         {
             _db = db;
-            _response = new();
             _mapper = mapper;
         }
 
-        public async Task<APIResponse> Handle(GetDistrictNumbersQuery request, CancellationToken cancellationToken)
+        public async Task<List<DistrictNumberDto>> Handle(GetDistrictNumbersQuery request, CancellationToken cancellationToken)
         {
-            try
+            var districtNumber = await _db.DistrictNumbers.ToListAsync(cancellationToken);
+
+            if (districtNumber == null)
             {
-                var districtNumber = await _db.DistrictNumbers.ToListAsync(cancellationToken);
-
-                if (districtNumber == null)
-                {
-                    _response.StatusCode = HttpStatusCode.NotFound;
-                    _response.IsSuccess = false;
-                    return _response;
-                }
-
-                _response.Result = _mapper.Map<List<DistrictNumberDto>>(districtNumber);
-                _response.StatusCode = HttpStatusCode.OK;
-
-                return _response;
-            }
-            catch (Exception ex)
-            {
-                _response.IsSuccess = false;
-                _response.ErrorMessages = new List<string> { ex.Message };
+                throw new ArgumentNullException();
             }
 
-            return _response;
+            return _mapper.Map<List<DistrictNumberDto>>(districtNumber);
         }
     }
 }

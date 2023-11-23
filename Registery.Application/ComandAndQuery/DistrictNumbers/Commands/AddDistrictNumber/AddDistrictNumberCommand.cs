@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Registery.Application.ComandAndQuery.DistrictNumbers.Commands.AddDistrictNumber
 {
-    public class AddDistrictNumberCommand : IRequest<APIResponse>
+    public class AddDistrictNumberCommand : IRequest<DistrictNumberDto>
     {
         public string? Value { get; set; }
     }
