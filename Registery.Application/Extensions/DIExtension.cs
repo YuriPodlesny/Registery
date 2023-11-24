@@ -26,6 +26,7 @@ using Registery.Application.ComandAndQuery.RosreestrStatuses.Commands.DeleteRosr
 using Registery.Application.ComandAndQuery.RosreestrStatuses.Commands.UpdateRosreestrStatus;
 using Registery.Application.ComandAndQuery.RosreestrStatuses.Queries.GetRosreestrStatus;
 using Registery.Application.ComandAndQuery.RosreestrStatuses.Queries.GetRosreestrStatuses;
+using Registery.Application.Mapping.DistrictNumberDTO;
 using Registery.Application.Models;
 using Registry.Domain.Entities;
 
@@ -36,8 +37,8 @@ namespace Registery.Application.Extensions
         public static IServiceCollection AddApplications(this IServiceCollection services)
         {
             return services
-                .AddScoped<IRequestHandler<GetDistrictNumberByIdQuery, APIResponse>, GetDistrictNumberByIdQueryHandler>()
-                .AddScoped<IRequestHandler<GetDistrictNumbersQuery, APIResponse>, GetDistrictNambersQueryHandler>()
+                .AddScoped<IRequestHandler<GetDistrictNumberByIdQuery, DistrictNumberDto>, GetDistrictNumberByIdQueryHandler>()
+                .AddScoped<IRequestHandler<GetDistrictNumbersQuery, List<DistrictNumberDto>>, GetDistrictNambersQueryHandler>()
                 .AddScoped<IRequestHandler<AddFormCommand, APIResponse>, AddFormCommandHandler>()
                 .AddScoped<IRequestHandler<DeleteFormCommand, APIResponse>, DeleteFormCommandHandler>()
                 .AddScoped<IRequestHandler<UpdateFormCommand, APIResponse>, UpdateFormCommandHandler>()
@@ -58,11 +59,9 @@ namespace Registery.Application.Extensions
                 .AddScoped<IRequestHandler<UpdateRosreestrStatusCommand, APIResponse>, UpdateRosreestrStatusCommandHandler>()
                 .AddScoped<IRequestHandler<GetRosreestrStatusByIdQuery, APIResponse>, GetRosreestrStatusByIdQueryHandler>()
                 .AddScoped<IRequestHandler<GetRosreestrStatusesQuery, APIResponse>, GetRosreestrStatusesQueryHandler>()
-                .AddScoped<IRequestHandler<AddDistrictNumberCommand, APIResponse>, AddDistrictNumberCommandHandler>()
-                .AddScoped<IRequestHandler<DeleteDistrictNumberCommand, APIResponse>, DeleteDistrictNumberCommandHandler>()
-                .AddScoped<IRequestHandler<UpdateDistrictNumberCommand, APIResponse>, UpdateDistrictNumberCommandHandler>();
-
-
+                .AddScoped<IRequestHandler<AddDistrictNumberCommand, DistrictNumberDto>, AddDistrictNumberCommandHandler>()
+                .AddScoped<IRequestHandler<DeleteDistrictNumberCommand, Unit>, DeleteDistrictNumberCommandHandler>()
+                .AddScoped<IRequestHandler<UpdateDistrictNumberCommand, DistrictNumberDto>, UpdateDistrictNumberCommandHandler>();
         }
     }
 }

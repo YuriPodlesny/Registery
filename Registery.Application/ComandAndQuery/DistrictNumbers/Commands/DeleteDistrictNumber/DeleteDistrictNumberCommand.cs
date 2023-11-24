@@ -8,6 +8,6 @@ using System.Threading.Tasks;
 
 namespace Registery.Application.ComandAndQuery.DistrictNumbers.Commands.DeleteDistrictNumber
 {
-    public record DeleteDistrictNumberCommand(Guid Id) : IRequest<APIResponse>;
+    public record DeleteDistrictNumberCommand(Guid Id) : IRequest<Unit>;
 
 }

@@ -21,12 +21,8 @@ namespace Registery.Application.ComandAndQuery.DistrictNumbers.Queries.GetDistri
 
         public async Task<List<DistrictNumberDto>> Handle(GetDistrictNumbersQuery request, CancellationToken cancellationToken)
         {
-            var districtNumber = await _db.DistrictNumbers.ToListAsync(cancellationToken);
-
-            if (districtNumber == null)
-            {
-                throw new ArgumentNullException();
-            }
+            var districtNumber = await _db.DistrictNumbers.ToListAsync(cancellationToken) 
+                ?? throw new ArgumentNullException();
 
             return _mapper.Map<List<DistrictNumberDto>>(districtNumber);
         }

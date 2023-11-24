@@ -2,7 +2,11 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Registery.Application.ComandAndQuery.DistrictNumbers.Commands.AddDistrictNumber;
+using Registery.Application.ComandAndQuery.DistrictNumbers.Commands.DeleteDistrictNumber;
+using Registery.Application.ComandAndQuery.DistrictNumbers.Commands.UpdateDistrictNumber;
 using Registery.Application.ComandAndQuery.DistrictNumbers.Queries.GetDistrictNambers;
+using Registery.Application.ComandAndQuery.DistrictNumbers.Queries.GetDistrictNumber;
+using Registery.Application.Mapping.DistrictNumberDTO;
 using Registery.Models.DistrictNumber;
 
 namespace Registery.Controllers
@@ -21,16 +25,16 @@ namespace Registery.Controllers
         [HttpGet]
         public async Task<IActionResult> GetDistrictNumbers()
         {
-            return View(await _mediator.Send(new GetDistrictNumbersQuery(), CancellationToken.None));
+            var districtNumbers = await _mediator.Send(new GetDistrictNumbersQuery(), CancellationToken.None);
+            districtNumbers.Sort();
+            return View(districtNumbers);
         }
-
 
         [HttpGet]
         public IActionResult CreateDistrictNumber()
         {
             return View();
         }
-
 
         [HttpPost]
         public async Task<IActionResult> CreateDistrictNumber(CreateDistrictNumberVM model)
@@ -44,17 +48,29 @@ namespace Registery.Controllers
         }
 
         [HttpGet]
-        public IActionResult UpdateDistrictNumber()
+        public async Task<IActionResult> UpdateDistrictNumber(Guid id)
         {
-            return View();
+            var result = await _mediator.Send(new GetDistrictNumberByIdQuery(id), CancellationToken.None);
+            var updateModel = _mapper.Map<UpdateDistrictNumberVM>(result);
+            return View(updateModel);
         }
 
         [HttpPost]
-        public IActionResult UpdateDistrictNumber(UpdateDistrictNumberVM model)
+        public async Task<IActionResult> UpdateDistrictNumber(UpdateDistrictNumberVM model)
         {
             if (!ModelState.IsValid) { return View(model); }
 
+            var updateModel = _mapper.Map<UpdateDistrictNumberCommand>(model);
+            await _mediator.Send(updateModel, CancellationToken.None);
 
+            return RedirectToAction(nameof(GetDistrictNumbers), "DistrictNumber");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteDistrictNumber(Guid id)
+        {
+            await _mediator.Send(new DeleteDistrictNumberCommand(id), CancellationToken.None);
+            return RedirectToAction(nameof(GetDistrictNumbers), "DistrictNumber");
         }
     }
 }
