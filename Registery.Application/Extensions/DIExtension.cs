@@ -28,8 +28,9 @@ using Registery.Application.ComandAndQuery.RosreestrStatuses.Queries.GetRosreest
 using Registery.Application.ComandAndQuery.RosreestrStatuses.Queries.GetRosreestrStatuses;
 using Registery.Application.Mapping.DistrictNumberDTO;
 using Registery.Application.Mapping.OMSStatusDTO;
+using Registery.Application.Mapping.OrganizationDTO;
+using Registery.Application.Mapping.RosreestrStatusDTO;
 using Registery.Application.Models;
-using Registry.Domain.Entities;
 
 namespace Registery.Application.Extensions
 {
@@ -50,16 +51,16 @@ namespace Registery.Application.Extensions
                 .AddScoped<IRequestHandler<UpdateOMSStatusCommand, OMSStatusDto>, UpdateOMSStatusCommandHandler>()
                 .AddScoped<IRequestHandler<GetOMSStatusByIdQuery, APIResponse>, GetOMSStatusByIdQueryHandler>()
                 .AddScoped<IRequestHandler<GetOMSStatusesQuery, List<OMSStatusDto>>, GetOMSStatusesQueryHandler>()
-                .AddScoped<IRequestHandler<AddOrganizationCommand, APIResponse>, AddOrganizationCommandHandler>()
-                .AddScoped<IRequestHandler<DeleteOrganizationCommand, APIResponse>, DeleteOrganizationCommandHandler>()
-                .AddScoped<IRequestHandler<UpdateOrganizationCommand, APIResponse>, UpdateOrganizationCommandHandler>()
-                .AddScoped<IRequestHandler<GetOrganizationByIdQuery, APIResponse>, GetOrganizationByIdQueryHandler>()
-                .AddScoped<IRequestHandler<GetOrganizationsQuery, List<Organization>>, GetOrganizationsQueryHandler>()
-                .AddScoped<IRequestHandler<AddRosreestrStatusCommand, APIResponse>, AddRosreestrStatusCommandHandler>()
-                .AddScoped<IRequestHandler<DeleteRosreestrStatusCommand, APIResponse>, DeleteRosreestrStatusCommandHandler>()
-                .AddScoped<IRequestHandler<UpdateRosreestrStatusCommand, APIResponse>, UpdateRosreestrStatusCommandHandler>()
-                .AddScoped<IRequestHandler<GetRosreestrStatusByIdQuery, APIResponse>, GetRosreestrStatusByIdQueryHandler>()
-                .AddScoped<IRequestHandler<GetRosreestrStatusesQuery, APIResponse>, GetRosreestrStatusesQueryHandler>()
+                .AddScoped<IRequestHandler<AddOrganizationCommand, OrganizationDto>, AddOrganizationCommandHandler>()
+                .AddScoped<IRequestHandler<DeleteOrganizationCommand, Unit>, DeleteOrganizationCommandHandler>()
+                .AddScoped<IRequestHandler<UpdateOrganizationCommand, OrganizationDto>, UpdateOrganizationCommandHandler>()
+                .AddScoped<IRequestHandler<GetOrganizationByIdQuery, OrganizationDto>, GetOrganizationByIdQueryHandler>()
+                .AddScoped<IRequestHandler<GetOrganizationsQuery, List<OrganizationDto>>, GetOrganizationsQueryHandler>()
+                .AddScoped<IRequestHandler<AddRosreestrStatusCommand, RosreestrStatusDto>, AddRosreestrStatusCommandHandler>()
+                .AddScoped<IRequestHandler<DeleteRosreestrStatusCommand, Unit>, DeleteRosreestrStatusCommandHandler>()
+                .AddScoped<IRequestHandler<UpdateRosreestrStatusCommand, RosreestrStatusDto>, UpdateRosreestrStatusCommandHandler>()
+                .AddScoped<IRequestHandler<GetRosreestrStatusByIdQuery, RosreestrStatusDto>, GetRosreestrStatusByIdQueryHandler>()
+                .AddScoped<IRequestHandler<GetRosreestrStatusesQuery, List<RosreestrStatusDto>>, GetRosreestrStatusesQueryHandler>()
                 .AddScoped<IRequestHandler<AddDistrictNumberCommand, DistrictNumberDto>, AddDistrictNumberCommandHandler>()
                 .AddScoped<IRequestHandler<DeleteDistrictNumberCommand, Unit>, DeleteDistrictNumberCommandHandler>()
                 .AddScoped<IRequestHandler<UpdateDistrictNumberCommand, DistrictNumberDto>, UpdateDistrictNumberCommandHandler>();

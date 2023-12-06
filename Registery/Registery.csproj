@@ -28,8 +28,4 @@
     <ProjectReference Include="..\Registry.DAL\Registry.DAL.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\RosreestrStatus\" />
-  </ItemGroup>
-
 </Project>

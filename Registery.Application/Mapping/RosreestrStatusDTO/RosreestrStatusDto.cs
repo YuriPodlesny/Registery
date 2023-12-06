@@ -10,5 +10,6 @@ namespace Registery.Application.Mapping.RosreestrStatusDTO
     {
         public Guid Id { get; set; }
         public string? Value { get; set; }
+        public bool Delete { get; set; } = false;
     }
 }

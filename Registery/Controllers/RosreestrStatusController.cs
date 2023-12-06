@@ -1,12 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Registery.Application.ComandAndQuery.DistrictNumbers.Commands.DeleteDistrictNumber;
 using Registery.Application.ComandAndQuery.DistrictNumbers.Queries.GetDistrictNumber;
-using Registery.Application.ComandAndQuery.GetOMSStatus.Queries.GetQueries;
-using Registery.Application.ComandAndQuery.OMSStatuses.Commands.AddOMSStatus;
-using Registery.Application.ComandAndQuery.OMSStatuses.Commands.UpdateOMSStatus;
-using Registery.Application.ComandAndQuery.OMSStatuses.Queries.GetOMSStatuses;
 using Registery.Application.ComandAndQuery.RosreestrStatuses.Commands.AddRosreestrStatus;
 using Registery.Application.ComandAndQuery.RosreestrStatuses.Commands.DeleteRosreestrStatus;
 using Registery.Application.ComandAndQuery.RosreestrStatuses.Commands.UpdateRosreestrStatus;
@@ -28,7 +23,7 @@ namespace Registery.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetRosreestrStatus()
+        public async Task<IActionResult> GetRosreestrStatuses()
         {
             var omsStatus = await _mediator.Send(new GetRosreestrStatusesQuery(), CancellationToken.None);
             omsStatus.Sort();
@@ -49,7 +44,7 @@ namespace Registery.Controllers
             var addModel = _mapper.Map<AddRosreestrStatusCommand>(model);
             await _mediator.Send(addModel, CancellationToken.None);
 
-            return RedirectToAction(nameof(GetRosreestrStatus), "RosreestrStatus");
+            return RedirectToAction(nameof(GetRosreestrStatuses), "RosreestrStatus");
         }
 
         [HttpGet]
@@ -68,14 +63,14 @@ namespace Registery.Controllers
             var updateModel = _mapper.Map<UpdateRosreestrStatusCommand>(model);
             await _mediator.Send(updateModel, CancellationToken.None);
 
-            return RedirectToAction(nameof(GetRosreestrStatus), "RosreestrStatus");
+            return RedirectToAction(nameof(GetRosreestrStatuses), "RosreestrStatus");
         }
 
         [HttpPost]
         public async Task<IActionResult> DeleteRosreestrStatus(Guid id)
         {
             await _mediator.Send(new DeleteRosreestrStatusCommand(id), CancellationToken.None);
-            return RedirectToAction(nameof(GetRosreestrStatus), "RosreestrStatus");
+            return RedirectToAction(nameof(GetRosreestrStatuses), "RosreestrStatus");
         }
     }
 }
