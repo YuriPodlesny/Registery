@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Registery.Application.Interfaces;
+using Registery.Application.Mapping.DistrictNumberDTO;
 using Registery.Application.Mapping.OMSStatusDTO;
 using Registery.Application.Mapping.OrganizationDTO;
 using Registery.Application.Models;
@@ -15,44 +16,23 @@ using System.Threading.Tasks;
 
 namespace Registery.Application.ComandAndQuery.Organizations.Queries.GetOrganization
 {
-    public class GetOrganizationByIdQueryHandler : IRequestHandler<GetOrganizationByIdQuery, APIResponse>
+    public class GetOrganizationByIdQueryHandler : IRequestHandler<GetOrganizationByIdQuery, OrganizationDto>
     {
         private readonly IBaseDbContext _db;
         private readonly IMapper _mapper;
-        protected APIResponse _response;
 
         public GetOrganizationByIdQueryHandler(IBaseDbContext db, IMapper mapper)
         {
             _db = db;
             _mapper = mapper;
-            _response = new();
         }
 
-        public async Task<APIResponse> Handle(GetOrganizationByIdQuery request, CancellationToken cancellationToken)
+        public async Task<OrganizationDto> Handle(GetOrganizationByIdQuery request, CancellationToken cancellationToken)
         {
-            try
-            {
-                var organizationsFromDb = await _db.Organizations
-                    .Include(e=>e.DistrictNumber)
-                    .FirstOrDefaultAsync(e => e.Id == request.Id, cancellationToken);
+            var organization = await _db.Organizations.FirstOrDefaultAsync(e => e.Id == request.Id, cancellationToken)
+                ?? throw new ArgumentNullException(nameof(Organization));
 
-                if (organizationsFromDb == null)
-                {
-                    _response.StatusCode = HttpStatusCode.NotFound;
-                    _response.IsSuccess = false;
-                    return _response;
-                }
-                _response.Result = _mapper.Map<OrganizationDto>(organizationsFromDb);
-                _response.StatusCode = HttpStatusCode.OK;
-                return _response;
-            }
-            catch (Exception ex)
-            {
-                _response.IsSuccess = false;
-                _response.ErrorMessages = new List<string>() { ex.ToString() };
-            }
-
-            return _response;
+            return _mapper.Map<OrganizationDto>(organization);
         }
     }
 }

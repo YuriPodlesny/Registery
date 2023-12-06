@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Registery.Application.Mapping.OrganizationDTO;
 using Registery.Application.Models;
 using Registry.Domain.Entities;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Registery.Application.ComandAndQuery.Organizations.Commands.UpdateOrganization
 {
-    public class UpdateOrganizationCommand : IRequest<APIResponse>
+    public class UpdateOrganizationCommand : IRequest<OrganizationDto>
     {
         public Guid Id { get; set; }
         public required string Name { get; set; }

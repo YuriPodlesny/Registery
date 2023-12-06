@@ -8,6 +8,6 @@ using System.Threading.Tasks;
 
 namespace Registery.Application.ComandAndQuery.Organizations.Commands.DeleteOrganization
 {
-    public record DeleteOrganizationCommand(Guid Id) : IRequest<APIResponse>;
+    public record DeleteOrganizationCommand(Guid Id) : IRequest<Unit>;
 
 }

@@ -11,6 +11,7 @@ using Registery.Application.ComandAndQuery.OMSStatuses.Commands.AddOMSStatus;
 using Registery.Application.ComandAndQuery.OMSStatuses.Commands.UpdateOMSStatus;
 using Registery.Application.ComandAndQuery.OMSStatuses.Queries.GetOMSStatuses;
 using Registery.Models.DistrictNumber;
+using Registery.Models.OMSStatuses;
 
 namespace Registery.Controllers
 {
@@ -40,7 +41,7 @@ namespace Registery.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateOMSStatus(CreateDistrictNumberVM model)
+        public async Task<IActionResult> CreateOMSStatus(CreateOMSStatusVM model)
         {
             if (!ModelState.IsValid) { return View(model); }
 
@@ -59,7 +60,7 @@ namespace Registery.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateOMSStatus(UpdateDistrictNumberVM model)
+        public async Task<IActionResult> UpdateOMSStatus(UpdateOMSStatusVM model)
         {
             if (!ModelState.IsValid) { return View(model); }
 

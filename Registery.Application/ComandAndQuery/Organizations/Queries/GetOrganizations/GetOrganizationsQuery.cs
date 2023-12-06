@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Registery.Application.Mapping.OrganizationDTO;
 using Registery.Application.Models;
 using Registry.Domain.Entities;
 using System;
@@ -9,5 +10,5 @@ using System.Threading.Tasks;
 
 namespace Registery.Application.ComandAndQuery.Organizations.Queries.GetOrganizations
 {
-    public record GetOrganizationsQuery : IRequest<List<Organization>>;
+    public record GetOrganizationsQuery : IRequest<List<OrganizationDto>>;
 }

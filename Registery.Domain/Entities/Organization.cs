@@ -7,6 +7,7 @@ namespace Registry.Domain.Entities
     {
         public required string Name { get; set; }
         public required string INN { get; set; }
+        public bool Delete { get; set; } = false;
 
         public Guid DistrictNumberId { get; set; }
         public DistrictNumber? DistrictNumber { get; set; }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Registery.Application.Interfaces;
+using Registery.Application.Mapping.DistrictNumberDTO;
 using Registery.Application.Mapping.OrganizationDTO;
 using Registery.Application.Models;
 using Registry.Domain.Entities;
@@ -8,7 +9,7 @@ using System.Net;
 
 namespace Registery.Application.ComandAndQuery.Organizations.Commands.AddOrganization
 {
-    public class AddOrganizationCommandHandler : IRequestHandler<AddOrganizationCommand, APIResponse>
+    public class AddOrganizationCommandHandler : IRequestHandler<AddOrganizationCommand, OrganizationDto>
     {
         private readonly IBaseDbContext _db;
         private readonly IMapper _mapper;
@@ -21,35 +22,14 @@ namespace Registery.Application.ComandAndQuery.Organizations.Commands.AddOrganiz
             _response = new();
         }
 
-        public async Task<APIResponse> Handle(AddOrganizationCommand request, CancellationToken cancellationToken)
+        public async Task<OrganizationDto> Handle(AddOrganizationCommand request, CancellationToken cancellationToken)
         {
-            try
-            {
-                if (request == null)
-                {
-                    _response.StatusCode = HttpStatusCode.BadRequest;
-                    return _response;
-                }
+            var organization = _mapper.Map<Organization>(request);
 
-                var organization = new Organization
-                {
-                    Name = request.Name,
-                    INN = request.INN,
-                    DistrictNumberId = request.DistrictNumberId
-                };
+            await _db.Organizations.AddAsync(organization, cancellationToken);
+            await _db.SaveChangesAsync(cancellationToken);
 
-                await _db.Organizations.AddAsync(organization, cancellationToken);
-                await _db.SaveChangesAsync(cancellationToken);
-
-                _response.Result = _mapper.Map<OrganizationCreateDto>(organization);
-            }
-            catch (Exception ex)
-            {
-                _response.IsSuccess = false;
-                _response.ErrorMessages = new List<string>() { ex.ToString() };
-            }
-
-            return _response;
+            return _mapper.Map<OrganizationDto>(organization);
         }
     }
 }
