@@ -23,15 +23,17 @@
                         <li class="nav-item pt-lg-1">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item pt-lg-1">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
                         @if (User.IsInRole("Администратор"))
                         {
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Меню администратора</a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <li><a class="dropdown-item" asp-controller="DistrictNumber" asp-action="GetDistrictNumbers">Справочник «Номер района»</a></li>
+                                    <li><a class="dropdown-item" asp-controller="OMSStatus" asp-action="GetOMSStatuses">Справочник «Статус ОМС»</a></li>
+                                    <li><a class="dropdown-item" asp-controller="RosreestrStatus" asp-action="GetRosreestrStatuses">Справочник «Статус Росреестра»</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Organization" asp-action="GetOrganizations">Справочник «Организация»</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" asp-controller="Account" asp-action="Users">Пользватели</a></li>
                                 </ul>
                             </li>
                         }

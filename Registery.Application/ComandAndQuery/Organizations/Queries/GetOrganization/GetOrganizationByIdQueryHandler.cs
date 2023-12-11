@@ -2,17 +2,8 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Registery.Application.Interfaces;
-using Registery.Application.Mapping.DistrictNumberDTO;
-using Registery.Application.Mapping.OMSStatusDTO;
 using Registery.Application.Mapping.OrganizationDTO;
-using Registery.Application.Models;
 using Registry.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Registery.Application.ComandAndQuery.Organizations.Queries.GetOrganization
 {

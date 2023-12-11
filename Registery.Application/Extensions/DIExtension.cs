@@ -49,7 +49,7 @@ namespace Registery.Application.Extensions
                 .AddScoped<IRequestHandler<AddOMSStatusCommand, OMSStatusDto>, AddOMSStatusCommandHandler>()
                 .AddScoped<IRequestHandler<DeleteOMSStatusCommand, Unit>, DeleteOMSStatusCommandHandler>()
                 .AddScoped<IRequestHandler<UpdateOMSStatusCommand, OMSStatusDto>, UpdateOMSStatusCommandHandler>()
-                .AddScoped<IRequestHandler<GetOMSStatusByIdQuery, APIResponse>, GetOMSStatusByIdQueryHandler>()
+                .AddScoped<IRequestHandler<GetOMSStatusByIdQuery, OMSStatusDto>, GetOMSStatusByIdQueryHandler>()
                 .AddScoped<IRequestHandler<GetOMSStatusesQuery, List<OMSStatusDto>>, GetOMSStatusesQueryHandler>()
                 .AddScoped<IRequestHandler<AddOrganizationCommand, OrganizationDto>, AddOrganizationCommandHandler>()
                 .AddScoped<IRequestHandler<DeleteOrganizationCommand, Unit>, DeleteOrganizationCommandHandler>()

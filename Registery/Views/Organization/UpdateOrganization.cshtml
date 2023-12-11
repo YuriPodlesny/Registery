@@ -1,0 +1,32 @@
+﻿@model UpdateOrganizationVM
+
+@{
+    ViewBag.Title = "Изменить организацию";
+}
+
+<h2>Изменить организацию</h2>
+<form asp-controller="Organization" asp-action="UpdateOrganization">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="col-md-4">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="col-md-4">
+        <label asp-for="INN" class="form-label"></label>
+        <input asp-for="INN" class="form-control" />
+        <span asp-validation-for="INN" class="text-danger"></span>
+    </div>
+    <div class="col-md-4">
+        <label asp-for="DistrictNumberId" class="form-label"></label>
+        <select asp-for=DistrictNumberId class="form-select">
+            @foreach (var item in ViewBag.SelectListDistrictNumber)
+            {
+                <option value="@item.Key">@item.Value</option>
+            }
+        </select>
+    </div>
+    <div class="mt-3">
+        <input type="submit" value="Изменить" class="btn btn-primary" />
+    </div>
+</form>

@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
 using Registery.Application.Interfaces;
-using Registery.Application.Mapping.DistrictNumberDTO;
 using Registery.Application.Mapping.OMSStatusDTO;
-using Registery.Application.Models;
 using Registry.Domain.Entities;
-using System.Net;
 
 namespace Registery.Application.ComandAndQuery.OMSStatuses.Commands.UpdateOMSStatus
 {

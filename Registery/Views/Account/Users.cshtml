@@ -1,0 +1,27 @@
+﻿@model IEnumerable<UserVM>
+
+@{
+    ViewBag.Title = "Пользватели";
+}
+
+<h2>Пользователи</h2>
+
+<a asp-action="Register" class="btn btn-success btn-sm">Добавить</a>
+
+<table class="table">
+    <tr><th>ФИО</th><th>Email</th><th>Наименование организации</th>@* <th></th> *@</tr>
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td>@(user.LastName + " " + user.FirstName + " " + user.MiddleName)</td>
+            <td>@user.Email</td>
+            <td>@(user.OrganizationName == null ? "Отсутствует" : user.OrganizationName)</td>
+@*             <td>
+                <form method="post" asp-controller="RosreestrStatus" asp-action="DeleteRosreestrStatus" asp-route-id="@user.Id">
+                    <a class="btn btn-sm btn-primary" asp-controller="RosreestrStatus" asp-action="UpdateRosreestrStatus" asp-route-id="@user.Id">Изменить</a>
+                    <button type="submit" class="btn btn-sm btn-danger">Удалить</button>
+                </form>
+            </td> *@
+        </tr>
+    }
+</table>

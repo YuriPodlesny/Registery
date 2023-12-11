@@ -17,6 +17,9 @@ using Registery.Application.Mapping.RosreestrStatusDTO;
 using Registery.Domain.Entities;
 using Registery.Models.Account;
 using Registery.Models.DistrictNumber;
+using Registery.Models.OMSStatuses;
+using Registery.Models.Organization;
+using Registery.Models.RosreestrStatus;
 using Registry.Domain.Entities;
 
 namespace Registery.Mapping
@@ -35,15 +38,24 @@ namespace Registery.Mapping
             CreateMap<OMSStatus, OMSStatusDto>().ReverseMap();
             CreateMap<OMSStatus, AddOMSStatusCommand>().ReverseMap();
             CreateMap<OMSStatus, UpdateOMSStatusCommand>().ReverseMap();
+            CreateMap<CreateOMSStatusVM, AddOMSStatusCommand>().ReverseMap();
+            CreateMap<UpdateOMSStatusVM, UpdateOMSStatusCommand>().ReverseMap();
+            CreateMap<UpdateOMSStatusVM, OMSStatusDto>().ReverseMap();
 
             CreateMap<RosreestrStatus, RosreestrStatusDto>().ReverseMap();
             CreateMap<RosreestrStatus, AddRosreestrStatusCommand>().ReverseMap();
             CreateMap<RosreestrStatus, UpdateRosreestrStatusCommand>().ReverseMap();
+            CreateMap<CreateRosreestrStatusVM, AddRosreestrStatusCommand>().ReverseMap();
+            CreateMap<UpdateRosreestrStatusVM, UpdateRosreestrStatusCommand>().ReverseMap();
+            CreateMap<UpdateRosreestrStatusVM, RosreestrStatusDto>().ReverseMap();
 
             CreateMap<Organization, OrganizationDto>().ReverseMap();
             CreateMap<Organization, AddOrganizationCommand>().ReverseMap();
             CreateMap<Organization, UpdateOrganizationCommand>().ReverseMap();
             CreateMap<Organization, OrganizationCreateDto>().ReverseMap();
+            CreateMap<CreateOrganizationVM, AddOrganizationCommand>().ReverseMap();
+            CreateMap<UpdateOrganizationVM, UpdateOrganizationCommand>().ReverseMap();
+            CreateMap<UpdateOrganizationVM, OrganizationDto>().ReverseMap();
 
             CreateMap<Form, FormDto>().ReverseMap();
             CreateMap<Form, AddFormCommand>().ReverseMap();
@@ -51,6 +63,9 @@ namespace Registery.Mapping
             CreateMap<Form, FormCreateDto>().ReverseMap();
 
             CreateMap<User, RegisterVM>().ReverseMap();
+            CreateMap<User, UserVM>()
+                .ForMember("OrganizationName", opt => opt.MapFrom(c => c.Organization.Name))
+                .ReverseMap();
         }
     }
 }

@@ -6,7 +6,6 @@ using Registery.Application.ComandAndQuery.DistrictNumbers.Commands.DeleteDistri
 using Registery.Application.ComandAndQuery.DistrictNumbers.Commands.UpdateDistrictNumber;
 using Registery.Application.ComandAndQuery.DistrictNumbers.Queries.GetDistrictNambers;
 using Registery.Application.ComandAndQuery.DistrictNumbers.Queries.GetDistrictNumber;
-using Registery.Application.Mapping.DistrictNumberDTO;
 using Registery.Models.DistrictNumber;
 
 namespace Registery.Controllers

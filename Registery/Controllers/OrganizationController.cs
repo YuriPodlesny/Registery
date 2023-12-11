@@ -2,6 +2,8 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Registery.Application.ComandAndQuery.DistrictNumbers.Commands.DeleteDistrictNumber;
+using Registery.Application.ComandAndQuery.DistrictNumbers.Queries.GetDistrictNambers;
+using Registery.Application.ComandAndQuery.DistrictNumbers.Queries.GetDistrictNumbers;
 using Registery.Application.ComandAndQuery.GetOMSStatus.Queries.GetQueries;
 using Registery.Application.ComandAndQuery.OMSStatuses.Commands.AddOMSStatus;
 using Registery.Application.ComandAndQuery.OMSStatuses.Commands.UpdateOMSStatus;
@@ -31,13 +33,22 @@ namespace Registery.Controllers
         public async Task<IActionResult> GetOrganizations()
         {
             var organization = await _mediator.Send(new GetOrganizationsQuery(), CancellationToken.None);
-            organization.Sort();
+            //organization.Sort();
             return View(organization);
         }
 
         [HttpGet]
-        public IActionResult CreateOrganization()
+        public async Task<IActionResult> CreateOrganization()
         {
+            var selectorDistrictNumbers = new Dictionary<Guid, string>();
+            var districtNumbers = await _mediator.Send(new GetDistrictNumbersQuery(), CancellationToken.None);
+
+            foreach (var district in districtNumbers)
+            {
+                selectorDistrictNumbers.Add(district.Id, district.Value!);
+            }
+
+            ViewBag.SelectListDistrictNumber = selectorDistrictNumbers;
             return View();
         }
 
@@ -55,6 +66,16 @@ namespace Registery.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateOrganization(Guid id)
         {
+            var selectorDistrictNumbers = new Dictionary<Guid, string>();
+            var districtNumbers = await _mediator.Send(new GetDistrictNumbersQuery(), CancellationToken.None);
+
+            foreach (var district in districtNumbers)
+            {
+                selectorDistrictNumbers.Add(district.Id, district.Value!);
+            }
+
+            ViewBag.SelectListDistrictNumber = selectorDistrictNumbers;
+
             var result = await _mediator.Send(new GetOrganizationByIdQuery(id), CancellationToken.None);
             var updateModel = _mapper.Map<UpdateOrganizationVM>(result);
             return View(updateModel);

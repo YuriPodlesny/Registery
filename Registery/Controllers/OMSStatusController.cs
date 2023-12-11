@@ -1,16 +1,11 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Registery.Application.ComandAndQuery.DistrictNumbers.Commands.AddDistrictNumber;
-using Registery.Application.ComandAndQuery.DistrictNumbers.Commands.DeleteDistrictNumber;
-using Registery.Application.ComandAndQuery.DistrictNumbers.Commands.UpdateDistrictNumber;
-using Registery.Application.ComandAndQuery.DistrictNumbers.Queries.GetDistrictNambers;
-using Registery.Application.ComandAndQuery.DistrictNumbers.Queries.GetDistrictNumber;
 using Registery.Application.ComandAndQuery.GetOMSStatus.Queries.GetQueries;
 using Registery.Application.ComandAndQuery.OMSStatuses.Commands.AddOMSStatus;
+using Registery.Application.ComandAndQuery.OMSStatuses.Commands.DeleteOMSStatus;
 using Registery.Application.ComandAndQuery.OMSStatuses.Commands.UpdateOMSStatus;
 using Registery.Application.ComandAndQuery.OMSStatuses.Queries.GetOMSStatuses;
-using Registery.Models.DistrictNumber;
 using Registery.Models.OMSStatuses;
 
 namespace Registery.Controllers
@@ -55,7 +50,7 @@ namespace Registery.Controllers
         public async Task<IActionResult> UpdateOMSStatus(Guid id)
         {
             var result = await _mediator.Send(new GetOMSStatusByIdQuery(id), CancellationToken.None);
-            var updateModel = _mapper.Map<UpdateDistrictNumberVM>(result);
+            var updateModel = _mapper.Map<UpdateOMSStatusVM>(result);
             return View(updateModel);
         }
 
@@ -73,7 +68,7 @@ namespace Registery.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteDistrictNumber(Guid id)
         {
-            await _mediator.Send(new DeleteDistrictNumberCommand(id), CancellationToken.None);
+            await _mediator.Send(new DeleteOMSStatusCommand(id), CancellationToken.None);
             return RedirectToAction(nameof(GetOMSStatuses), "OMSStatus");
         }
     }

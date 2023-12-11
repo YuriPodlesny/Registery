@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Registery.Application.ComandAndQuery.Organizations.Queries.GetOrganizations;
 using Registery.Domain.Entities;
 using Registery.Models.Account;
@@ -22,6 +23,13 @@ namespace Registery.Controllers
             _userManager = userManager;
             _mediator = mediator;
             _mapper = mapper;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Users()
+        {
+            var usersFromDb = await _userManager.Users.Include(e => e.Organization).ToListAsync();
+            return View(_mapper.Map<List<UserVM>>(usersFromDb));
         }
 
         [HttpGet]

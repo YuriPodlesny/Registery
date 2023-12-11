@@ -1,7 +1,4 @@
-﻿using System.Xml.Linq;
-using System;
-
-namespace Registery.Application.Mapping.DistrictNumberDTO
+﻿namespace Registery.Application.Mapping.DistrictNumberDTO
 {
     public class DistrictNumberDto : IComparable
     {

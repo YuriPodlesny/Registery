@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Registery.Application.ComandAndQuery.DistrictNumbers.Queries.GetDistrictNumber;
 using Registery.Application.ComandAndQuery.RosreestrStatuses.Commands.AddRosreestrStatus;
 using Registery.Application.ComandAndQuery.RosreestrStatuses.Commands.DeleteRosreestrStatus;
 using Registery.Application.ComandAndQuery.RosreestrStatuses.Commands.UpdateRosreestrStatus;
+using Registery.Application.ComandAndQuery.RosreestrStatuses.Queries.GetRosreestrStatus;
 using Registery.Application.ComandAndQuery.RosreestrStatuses.Queries.GetRosreestrStatuses;
-using Registery.Models.DistrictNumber;
 using Registery.Models.RosreestrStatus;
 
 namespace Registery.Controllers
@@ -31,13 +30,13 @@ namespace Registery.Controllers
         }
 
         [HttpGet]
-        public IActionResult CreateOMSStatus()
+        public IActionResult CreateRosreestrStatus()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateRosreestrStatus(CreateDistrictNumberVM model)
+        public async Task<IActionResult> CreateRosreestrStatus(CreateRosreestrStatusVM model)
         {
             if (!ModelState.IsValid) { return View(model); }
 
@@ -50,13 +49,13 @@ namespace Registery.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateRosreestrStatus(Guid id)
         {
-            var result = await _mediator.Send(new GetDistrictNumberByIdQuery(id), CancellationToken.None);
+            var result = await _mediator.Send(new GetRosreestrStatusByIdQuery(id), CancellationToken.None);
             var updateModel = _mapper.Map<UpdateRosreestrStatusVM>(result);
             return View(updateModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateRosreestrStatus(UpdateDistrictNumberVM model)
+        public async Task<IActionResult> UpdateRosreestrStatus(UpdateRosreestrStatusVM model)
         {
             if (!ModelState.IsValid) { return View(model); }
 
