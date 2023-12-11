@@ -2,9 +2,7 @@
 using MediatR;
 using Registery.Application.Interfaces;
 using Registery.Application.Mapping.DistrictNumberDTO;
-using Registery.Application.Models;
 using Registry.Domain.Entities;
-using System.Net;
 
 namespace Registery.Application.ComandAndQuery.DistrictNumbers.Commands.AddDistrictNumber
 {

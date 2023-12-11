@@ -1,0 +1,50 @@
+﻿@model IEnumerable<FormDto>
+
+@{
+    ViewBag.Title = "Форма ввода";
+}
+
+<h2>Форма ввода</h2>
+
+<a asp-action="" class="btn btn-success btn-sm">Добавить</a>
+
+<table class="table">
+    <tr>
+        <th>Район</th>
+        <th>Кадастровый номер</th>
+        <th>Адрес</th>
+        <th>Состояние в ЕГРН</th>
+        <th>Статус Росреестр</th>
+        <th>Статус ОМС</th>
+        <th>Последнее изменение Росреестр</th>
+        <th>Последнее изменение ОМС</th>
+        <th>Последнее изменение Пользователь ОМС</th>
+        @if (User.IsInRole("Администратор"))
+        {
+            <th></th>
+        } 
+    </tr>
+    @foreach (var form in Model)
+    {
+        <tr>
+            <td>@form.DistrictNumber</td>
+            <td>@form.CadastralNumber</td>
+            <td>@form.Address</td>
+            <td>@form.StatusEGRN</td>
+            <td>@form.RosreestrStatus</td>
+            <td>@form.OMSStatus</td>
+            <td>@form.LastModifiedDateRosreestr</td>
+            <td>@form.LastModifiedDateOMS</td>
+            <td>@form.LastModifiedDateOMS</td>
+            @if (User.IsInRole("Администратор"))
+            {
+                <td>
+                    <form method="post" asp-controller="Organization" asp-action="DeleteOrganization" asp-route-id="@form.Id">
+                        <a class="btn btn-sm btn-primary" asp-controller="Organization" asp-action="UpdateOrganization" asp-route-id="@form.Id">Изменить</a>
+                        <button type="submit" class="btn btn-sm btn-danger">Удалить</button>
+                    </form>
+                </td>
+            }
+        </tr>
+    }
+</table>

@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
 using MediatR;
 using Registery.Application.Interfaces;
-using Registery.Application.Mapping.DistrictNumberDTO;
 using Registery.Application.Mapping.RosreestrStatusDTO;
-using Registery.Application.Models;
 using Registry.Domain.Entities;
-using System.Net;
 
 namespace Registery.Application.ComandAndQuery.RosreestrStatuses.Commands.AddRosreestrStatus
 {

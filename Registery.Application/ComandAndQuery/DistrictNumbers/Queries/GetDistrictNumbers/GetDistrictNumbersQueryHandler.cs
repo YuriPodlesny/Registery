@@ -4,8 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Registery.Application.ComandAndQuery.DistrictNumbers.Queries.GetDistrictNambers;
 using Registery.Application.Interfaces;
 using Registery.Application.Mapping.DistrictNumberDTO;
-using Registery.Application.Models;
-using System.Net;
 
 namespace Registery.Application.ComandAndQuery.DistrictNumbers.Queries.GetDistrictNumbers
 {
@@ -21,7 +19,7 @@ namespace Registery.Application.ComandAndQuery.DistrictNumbers.Queries.GetDistri
 
         public async Task<List<DistrictNumberDto>> Handle(GetDistrictNumbersQuery request, CancellationToken cancellationToken)
         {
-            var districtNumber = await _db.DistrictNumbers.ToListAsync(cancellationToken) 
+            var districtNumber = await _db.DistrictNumbers.ToListAsync(cancellationToken)
                 ?? throw new ArgumentNullException();
 
             return _mapper.Map<List<DistrictNumberDto>>(districtNumber);

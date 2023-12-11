@@ -1,19 +1,12 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Registery.Application.ComandAndQuery.DistrictNumbers.Commands.DeleteDistrictNumber;
 using Registery.Application.ComandAndQuery.DistrictNumbers.Queries.GetDistrictNambers;
-using Registery.Application.ComandAndQuery.DistrictNumbers.Queries.GetDistrictNumbers;
-using Registery.Application.ComandAndQuery.GetOMSStatus.Queries.GetQueries;
-using Registery.Application.ComandAndQuery.OMSStatuses.Commands.AddOMSStatus;
-using Registery.Application.ComandAndQuery.OMSStatuses.Commands.UpdateOMSStatus;
-using Registery.Application.ComandAndQuery.OMSStatuses.Queries.GetOMSStatuses;
 using Registery.Application.ComandAndQuery.Organizations.Commands.AddOrganization;
 using Registery.Application.ComandAndQuery.Organizations.Commands.DeleteOrganization;
 using Registery.Application.ComandAndQuery.Organizations.Commands.UpdateOrganization;
 using Registery.Application.ComandAndQuery.Organizations.Queries.GetOrganization;
 using Registery.Application.ComandAndQuery.Organizations.Queries.GetOrganizations;
-using Registery.Models.DistrictNumber;
 using Registery.Models.Organization;
 
 namespace Registery.Controllers
@@ -33,7 +26,7 @@ namespace Registery.Controllers
         public async Task<IActionResult> GetOrganizations()
         {
             var organization = await _mediator.Send(new GetOrganizationsQuery(), CancellationToken.None);
-            //organization.Sort();
+            organization.Sort();
             return View(organization);
         }
 

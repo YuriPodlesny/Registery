@@ -27,10 +27,10 @@ using Registery.Application.ComandAndQuery.RosreestrStatuses.Commands.UpdateRosr
 using Registery.Application.ComandAndQuery.RosreestrStatuses.Queries.GetRosreestrStatus;
 using Registery.Application.ComandAndQuery.RosreestrStatuses.Queries.GetRosreestrStatuses;
 using Registery.Application.Mapping.DistrictNumberDTO;
+using Registery.Application.Mapping.FormDTO;
 using Registery.Application.Mapping.OMSStatusDTO;
 using Registery.Application.Mapping.OrganizationDTO;
 using Registery.Application.Mapping.RosreestrStatusDTO;
-using Registery.Application.Models;
 
 namespace Registery.Application.Extensions
 {
@@ -41,11 +41,11 @@ namespace Registery.Application.Extensions
             return services
                 .AddScoped<IRequestHandler<GetDistrictNumberByIdQuery, DistrictNumberDto>, GetDistrictNumberByIdQueryHandler>()
                 .AddScoped<IRequestHandler<GetDistrictNumbersQuery, List<DistrictNumberDto>>, GetDistrictNambersQueryHandler>()
-                .AddScoped<IRequestHandler<AddFormCommand, APIResponse>, AddFormCommandHandler>()
-                .AddScoped<IRequestHandler<DeleteFormCommand, APIResponse>, DeleteFormCommandHandler>()
-                .AddScoped<IRequestHandler<UpdateFormCommand, APIResponse>, UpdateFormCommandHandler>()
-                .AddScoped<IRequestHandler<GetFormByIdQuery, APIResponse>, GetFormByIdQueryHandler>()
-                .AddScoped<IRequestHandler<GetFormsQuery, APIResponse>, GetFormsQueryHandler>()
+                .AddScoped<IRequestHandler<AddFormCommand, FormDto>, AddFormCommandHandler>()
+                .AddScoped<IRequestHandler<DeleteFormCommand, Unit>, DeleteFormCommandHandler>()
+                .AddScoped<IRequestHandler<UpdateFormCommand, FormDto>, UpdateFormCommandHandler>()
+                .AddScoped<IRequestHandler<GetFormByIdQuery, FormDto>, GetFormByIdQueryHandler>()
+                .AddScoped<IRequestHandler<GetFormsQuery, List<FormDto>>, GetFormsQueryHandler>()
                 .AddScoped<IRequestHandler<AddOMSStatusCommand, OMSStatusDto>, AddOMSStatusCommandHandler>()
                 .AddScoped<IRequestHandler<DeleteOMSStatusCommand, Unit>, DeleteOMSStatusCommandHandler>()
                 .AddScoped<IRequestHandler<UpdateOMSStatusCommand, OMSStatusDto>, UpdateOMSStatusCommandHandler>()

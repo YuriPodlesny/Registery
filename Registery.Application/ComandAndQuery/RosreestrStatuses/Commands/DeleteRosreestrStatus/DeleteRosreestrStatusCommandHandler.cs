@@ -1,8 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Registery.Application.Interfaces;
-using Registery.Application.Models;
-using System.Net;
 
 namespace Registery.Application.ComandAndQuery.RosreestrStatuses.Commands.DeleteRosreestrStatus
 {

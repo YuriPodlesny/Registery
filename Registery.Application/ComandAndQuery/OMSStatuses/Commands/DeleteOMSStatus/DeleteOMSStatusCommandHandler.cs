@@ -1,20 +1,16 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Registery.Application.Interfaces;
-using Registery.Application.Models;
-using System.Net;
 
 namespace Registery.Application.ComandAndQuery.OMSStatuses.Commands.DeleteOMSStatus
 {
     public class DeleteOMSStatusCommandHandler : IRequestHandler<DeleteOMSStatusCommand, Unit>
     {
         private readonly IBaseDbContext _db;
-        protected APIResponse _response;
 
         public DeleteOMSStatusCommandHandler(IBaseDbContext db)
         {
             _db = db;
-            _response = new();
         }
 
         public async Task<Unit> Handle(DeleteOMSStatusCommand request, CancellationToken cancellationToken)

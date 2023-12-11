@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Registery.Application.Mapping.DistrictNumberDTO;
-using Registery.Application.Models;
 
 namespace Registery.Application.ComandAndQuery.DistrictNumbers.Commands.UpdateDistrictNumber
 {

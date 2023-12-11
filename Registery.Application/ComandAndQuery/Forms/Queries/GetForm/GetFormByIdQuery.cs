@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using Registery.Application.Models;
+using Registery.Application.Mapping.FormDTO;
 
 namespace Registery.Application.ComandAndQuery.Forms.Queries.GetForm
 {
-    public record GetFormByIdQuery(Guid Id) : IRequest<APIResponse>;
+    public record GetFormByIdQuery(Guid Id) : IRequest<FormDto>;
 }

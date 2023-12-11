@@ -1,15 +1,9 @@
 ﻿using MediatR;
-using Registery.Application.Models;
-using Registry.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Registery.Application.Mapping.FormDTO;
 
 namespace Registery.Application.ComandAndQuery.Forms.Commands.AddForm
 {
-    public class AddFormCommand : IRequest<APIResponse>
+    public class AddFormCommand : IRequest<FormDto>
     {
         public string? CadastralNumber { get; set; }
         public string Address { get; set; }
