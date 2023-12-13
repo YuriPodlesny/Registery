@@ -27,22 +27,22 @@ namespace Registry.DAL.DbInitialazer
             string adminLastName = "Фамилия";
             string adminMiddleName = "Отчество";
 
-            if (!_roleManager.RoleExistsAsync(adminRole).GetAwaiter().GetResult())
-            {
-                _roleManager.CreateAsync(new IdentityRole(adminRole)).GetAwaiter().GetResult();
-                _userManager.CreateAsync(new User
-                {
-                    UserName = adminEmail,
-                    FirstName = adminFirstName,
-                    MiddleName = adminMiddleName,
-                    LastName = adminLastName,
-                    Email = adminEmail,
-                    EmailConfirmed = true
-                }, adminPassword).GetAwaiter().GetResult();
+            //if (!_roleManager.RoleExistsAsync(adminRole).GetAwaiter().GetResult())
+            //{
+            //    _roleManager.CreateAsync(new IdentityRole(adminRole)).GetAwaiter().GetResult();
+            //    _userManager.CreateAsync(new User
+            //    {
+            //        UserName = adminEmail,
+            //        FirstName = adminFirstName,
+            //        MiddleName = adminMiddleName,
+            //        LastName = adminLastName,
+            //        Email = adminEmail,
+            //        EmailConfirmed = true
+            //    }, adminPassword).GetAwaiter().GetResult();
 
-                User user = _db.Users.FirstOrDefault(u => u.Email == adminEmail)!;
-                _userManager.AddToRoleAsync(user, adminRole).GetAwaiter().GetResult();
-            }
+            //    User user = _db.Users.FirstOrDefault(u => u.Email == adminEmail)!;
+            //    _userManager.AddToRoleAsync(user, adminRole).GetAwaiter().GetResult();
+            //}
         }
     }
 }

@@ -1,0 +1,56 @@
+﻿@model UpdateFormVM
+
+@{
+    ViewBag.Title = "Изменить строку";
+}
+
+<h2>Добавить новую строку</h2>
+<form asp-controller="Form" asp-action="CreateForm">
+    <input type="hidden" asp-for="Id" />
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="col-md-4">
+        <label asp-for="CadastralNumber" class="form-label"></label>
+        <input asp-for="CadastralNumber" class="form-control" />
+        <span asp-validation-for="CadastralNumber" class="text-danger"></span>
+    </div>
+    <div class="col-md-4">
+        <label asp-for="Address" class="form-label"></label>
+        <input asp-for="Address" class="form-control" />
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+    <div class="col-md-4">
+        <label asp-for="StatusEGRN" class="form-label"></label>
+        <input asp-for="StatusEGRN" class="form-control" />
+        <span asp-validation-for="StatusEGRN" class="text-danger"></span>
+    </div>
+    <div class="col-md-4">
+        <label asp-for="DistrictNumberId" class="form-label"></label>
+        <select asp-for=DistrictNumberId class="form-select">
+            @foreach (var item in ViewBag.SelectListDistrictNumber)
+            {
+                <option value="@item.Key">@item.Value</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-4">
+        <label asp-for="RosreestrStatusId" class="form-label"></label>
+        <select asp-for="RosreestrStatusId" class="form-select">
+            @foreach (var item in ViewBag.SelectListRosreestrStatus)
+            {
+                <option value="@item.Key">@item.Value</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-4">
+        <label asp-for="OMSStatusId" class="form-label"></label>
+        <select asp-for="OMSStatusId" class="form-select">
+            @foreach (var item in ViewBag.SelectOMSStatus)
+            {
+                <option value="@item.Key">@item.Value</option>
+            }
+        </select>
+    </div>
+    <div class="mt-3">
+        <input type="submit" value="Добавить" class="btn btn-primary" />
+    </div>
+</form>

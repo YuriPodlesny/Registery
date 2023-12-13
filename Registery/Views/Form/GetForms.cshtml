@@ -39,8 +39,8 @@
             @if (User.IsInRole("Администратор"))
             {
                 <td>
-                    <form method="post" asp-controller="Organization" asp-action="DeleteOrganization" asp-route-id="@form.Id">
-                        <a class="btn btn-sm btn-primary" asp-controller="Organization" asp-action="UpdateOrganization" asp-route-id="@form.Id">Изменить</a>
+                    <form method="post" asp-controller="Form" asp-action="DeleteForm" asp-route-id="@form.Id">
+                        <a class="btn btn-sm btn-primary" asp-controller="Form" asp-action="UpdateForm" asp-route-id="@form.Id">Изменить</a>
                         <button type="submit" class="btn btn-sm btn-danger">Удалить</button>
                     </form>
                 </td>
