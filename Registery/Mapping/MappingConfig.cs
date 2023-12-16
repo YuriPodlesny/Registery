@@ -17,6 +17,7 @@ using Registery.Application.Mapping.RosreestrStatusDTO;
 using Registery.Domain.Entities;
 using Registery.Models.Account;
 using Registery.Models.DistrictNumber;
+using Registery.Models.Form;
 using Registery.Models.OMSStatuses;
 using Registery.Models.Organization;
 using Registery.Models.RosreestrStatus;
@@ -61,6 +62,9 @@ namespace Registery.Mapping
             CreateMap<Form, AddFormCommand>().ReverseMap();
             CreateMap<Form, UpdateFormCommand>().ReverseMap();
             CreateMap<Form, FormCreateDto>().ReverseMap();
+            CreateMap<CreateFormVM, AddFormCommand>().ReverseMap();
+            CreateMap<UpdateFormVM, UpdateFormCommand>().ReverseMap();
+            CreateMap<UpdateFormVM, FormDto>().ReverseMap();
 
             CreateMap<User, RegisterVM>().ReverseMap();
             CreateMap<User, UserVM>()

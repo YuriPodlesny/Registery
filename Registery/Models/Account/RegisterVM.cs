@@ -39,7 +39,7 @@ namespace Registery.Models.Account
         [Display(Name = "Фамилия")]
         public string LastName { get; set; } = null!;
 
-        [Required]
+        //[Required]
         [Display(Name = "Роль")]
         public string Role { get;set; } = null!;
 

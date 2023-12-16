@@ -1,12 +1,15 @@
-﻿@model IEnumerable<FormDto>
+﻿@using Registery.Application;
+@model IEnumerable<FormDto>
 
 @{
     ViewBag.Title = "Форма ввода";
 }
 
 <h2>Форма ввода</h2>
-
-<a asp-action="" class="btn btn-success btn-sm">Добавить</a>
+@* @if (User.IsInRole("Администратор"))
+{ *@
+    <a asp-action="CreateForm" class="btn btn-success btn-sm">Добавить</a>
+@* } *@
 
 <table class="table">
     <tr>
@@ -27,15 +30,15 @@
     @foreach (var form in Model)
     {
         <tr>
-            <td>@form.DistrictNumber</td>
+            <td>@form.DistrictNumber?.Value</td>
             <td>@form.CadastralNumber</td>
             <td>@form.Address</td>
             <td>@form.StatusEGRN</td>
-            <td>@form.RosreestrStatus</td>
-            <td>@form.OMSStatus</td>
+            <td>@form.RosreestrStatus?.Value</td>
+            <td>@form.OMSStatus?.Value</td>
             <td>@form.LastModifiedDateRosreestr</td>
             <td>@form.LastModifiedDateOMS</td>
-            <td>@form.LastModifiedDateOMS</td>
+            <td>@form.LastModifiedUserOMS</td>
             @if (User.IsInRole("Администратор"))
             {
                 <td>
@@ -44,6 +47,14 @@
                         <button type="submit" class="btn btn-sm btn-danger">Удалить</button>
                     </form>
                 </td>
+            }
+            @if (User.IsInRole(SD.Role.ОМС.ToString()))
+            {
+                <a class="btn btn-sm btn-primary" asp-controller="Form" asp-action="UpdateForm" asp-route-id="@form.Id">Изменить</a>
+            }
+            @if (User.IsInRole(SD.Role.Росреестр.ToString()))
+            {
+                <a class="btn btn-sm btn-primary" asp-controller="Form" asp-action="UpdateForm" asp-route-id="@form.Id">Изменить</a>
             }
         </tr>
     }

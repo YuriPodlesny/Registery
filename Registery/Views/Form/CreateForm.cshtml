@@ -25,7 +25,7 @@
     <div class="col-md-4">
         <label asp-for="DistrictNumberId" class="form-label"></label>
         <select asp-for=DistrictNumberId class="form-select">
-            @foreach (var item in ViewBag.SelectListDistrictNumber)
+            @foreach (var item in ViewBag.SelectListDistrictNumbers)
             {
                 <option value="@item.Key">@item.Value</option>
             }

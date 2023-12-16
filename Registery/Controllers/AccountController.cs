@@ -33,7 +33,7 @@ namespace Registery.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Register()
+        public async Task<IActionResult> Register(RegisterVM registerVM)
         {
             var organizations = await _mediator.Send(new GetOrganizationsQuery(), CancellationToken.None);
             List<SelectListItem> organizationsSelectList = organizations
@@ -45,23 +45,29 @@ namespace Registery.Controllers
                     }
                 ).Distinct().ToList();
             ViewBag.organizationsSelectList = organizationsSelectList;
-            return View();
+
+            //ViewBag.role = _signInManager.UserManager.();
+
+            return View(registerVM);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterVM registerVM)
+        public async Task<IActionResult> RegisterPost(RegisterVM registerVM)
         {
             if (!ModelState.IsValid)
             {
-                return View(registerVM);
+                return RedirectToAction(nameof(Register), "Account", registerVM);
             }
 
             var user = _mapper.Map<User>(registerVM);
+            user.UserName = registerVM.Email;
+
             var result = await _userManager.CreateAsync(user, registerVM.Password);
+            _userManager.AddToRoleAsync(user, registerVM.Role).GetAwaiter().GetResult();
 
             if (result.Succeeded)
             {
-                return RedirectToAction(nameof(Index), "Home");
+                return RedirectToAction(nameof(Users), "Account");
             }
             else
             {

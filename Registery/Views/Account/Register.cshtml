@@ -2,7 +2,7 @@
 
 <h2>Регистрация</h2>
 
-<form method="post" asp-controller="Account" asp-action="Register">
+<form method="post" asp-controller="Account" asp-action="RegisterPost">
     <div asp-validation-summary="ModelOnly" class="valid-feedback"></div>
     <div class="col-md-4">
         <label asp-for="FirstName" class="form-label"></label>
@@ -36,7 +36,7 @@
     </div>
     <div class="col-md-4">
         <label asp-for="Role" class="form-label"></label>
-        <select class="form-select">
+        <select asp-for="Role" class="form-select">
             <option selected>Выберите роль пользователя</option>
             <option value="Росреестр">Сотрудник Росреестра</option>
             <option value="ОМС">Сотрудник ОМС</option>

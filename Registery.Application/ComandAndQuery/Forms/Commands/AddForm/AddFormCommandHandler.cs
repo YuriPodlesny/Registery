@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Registery.Application.Interfaces;
 using Registery.Application.Mapping.FormDTO;
+using Registery.Domain.Entities;
 using Registry.Domain.Entities;
 
 namespace Registery.Application.ComandAndQuery.Forms.Commands.AddForm
@@ -11,7 +13,7 @@ namespace Registery.Application.ComandAndQuery.Forms.Commands.AddForm
         private readonly IBaseDbContext _db;
         private readonly IMapper _mapper;
 
-        public AddFormCommandHandler(IBaseDbContext db, IMapper mapper)
+        public AddFormCommandHandler(IBaseDbContext db, IMapper mapper, UserManager<User> userManager)
         {
             _db = db;
             _mapper = mapper;

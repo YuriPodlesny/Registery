@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Registery.Application.ComandAndQuery.DistrictNumbers.Queries.GetDistrictNambers;
 using Registery.Application.ComandAndQuery.Forms.Commands.AddForm;
@@ -9,6 +10,7 @@ using Registery.Application.ComandAndQuery.Forms.Queries.GetForms;
 using Registery.Application.ComandAndQuery.OMSStatuses.Queries.GetOMSStatuses;
 using Registery.Application.ComandAndQuery.Organizations.Commands.UpdateOrganization;
 using Registery.Application.ComandAndQuery.RosreestrStatuses.Queries.GetRosreestrStatuses;
+using Registery.Domain.Entities;
 using Registery.Models.Form;
 
 namespace Registery.Controllers
@@ -17,11 +19,12 @@ namespace Registery.Controllers
     {
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
-
-        public FormController(IMediator mediator, IMapper mapper)
+        private readonly UserManager<User> _userManager;
+        public FormController(IMediator mediator, IMapper mapper, UserManager<User> userManager)
         {
             _mediator = mediator;
             _mapper = mapper;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -60,6 +63,18 @@ namespace Registery.Controllers
             if (!ModelState.IsValid) { return View(); }
 
             var addModel = _mapper.Map<AddFormCommand>(model);
+
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            if (User.IsInRole("Росреестр"))
+            {
+                addModel.LastModifiedDateRosreestr = DateTime.UtcNow;
+            }
+            if (User.IsInRole("ОМС"))
+            {
+                addModel.LastModifiedDateOMS = DateTime.UtcNow;
+                addModel.LastModifiedUserOMS = user?.LastName + " " + user?.FirstName + " " + user?.MiddleName;
+            }
+
             await _mediator.Send(addModel, CancellationToken.None);
 
             return RedirectToAction(nameof(GetForms), "Form");
