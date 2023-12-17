@@ -28,10 +28,10 @@ namespace Registery.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetForms()
+        public async Task<IActionResult> GetForms(int pageSize = 0, int pageNumber = 1)
         {
-            var form = await _mediator.Send(new GetFormsQuery(), CancellationToken.None);
-            //organization.Sort();
+            var form = await _mediator.Send(new GetFormsQuery(pageSize, pageNumber), CancellationToken.None);
+            
             return View(form);
         }
 
