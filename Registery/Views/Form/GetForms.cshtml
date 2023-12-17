@@ -21,11 +21,8 @@
         <th>Статус ОМС</th>
         <th>Последнее изменение Росреестр</th>
         <th>Последнее изменение ОМС</th>
-        <th>Последнее изменение Пользователь ОМС</th>
-        @if (User.IsInRole("Администратор"))
-        {
-            <th></th>
-        } 
+        <th>Последнее изменение пользователь ОМС</th>
+        <th></th>
     </tr>
     @foreach (var form in Model)
     {
@@ -50,11 +47,15 @@
             }
             @if (User.IsInRole(SD.Role.ОМС.ToString()))
             {
-                <a class="btn btn-sm btn-primary" asp-controller="Form" asp-action="UpdateForm" asp-route-id="@form.Id">Изменить</a>
+                <td>
+                    <a class="btn btn-sm btn-primary" asp-controller="Form" asp-action="UpdateForm" asp-route-id="@form.Id">Изменить</a>
+                </td>
             }
             @if (User.IsInRole(SD.Role.Росреестр.ToString()))
             {
-                <a class="btn btn-sm btn-primary" asp-controller="Form" asp-action="UpdateForm" asp-route-id="@form.Id">Изменить</a>
+                <td>
+                    <a class="btn btn-sm btn-primary" asp-controller="Form" asp-action="UpdateForm" asp-route-id="@form.Id">Изменить</a>
+                </td> 
             }
         </tr>
     }

@@ -7,6 +7,10 @@
 <h2>Добавить новую строку</h2>
 <form asp-controller="Form" asp-action="UpdateForm">
     <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="OMSStatusId" />
+    <input type="hidden" asp-for="LastModifiedDateRosreestr" />
+    <input type="hidden" asp-for="LastModifiedDateOMS" />
+    <input type="hidden" asp-for="LastModifiedUserOMS" />
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="col-md-4">
         <label asp-for="CadastralNumber" class="form-label"></label>
@@ -36,15 +40,6 @@
         <label asp-for="RosreestrStatusId" class="form-label"></label>
         <select asp-for="RosreestrStatusId" class="form-select">
             @foreach (var item in ViewBag.SelectListRosreestrStatus)
-            {
-                <option value="@item.Key">@item.Value</option>
-            }
-        </select>
-    </div>
-    <div class="col-md-4">
-        <label asp-for="OMSStatusId" class="form-label"></label>
-        <select asp-for="OMSStatusId" class="form-select">
-            @foreach (var item in ViewBag.SelectOMSStatus)
             {
                 <option value="@item.Key">@item.Value</option>
             }

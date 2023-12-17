@@ -12,6 +12,7 @@ namespace Registry.DAL
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options) 
         {
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         }
 
         public DbSet<DistrictNumber> DistrictNumbers { get; set; }

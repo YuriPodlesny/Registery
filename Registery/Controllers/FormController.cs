@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 using Registery.Application.ComandAndQuery.DistrictNumbers.Queries.GetDistrictNambers;
 using Registery.Application.ComandAndQuery.Forms.Commands.AddForm;
 using Registery.Application.ComandAndQuery.Forms.Commands.DeleteForm;
+using Registery.Application.ComandAndQuery.Forms.Commands.UpdateForm;
 using Registery.Application.ComandAndQuery.Forms.Queries.GetForm;
 using Registery.Application.ComandAndQuery.Forms.Queries.GetForms;
 using Registery.Application.ComandAndQuery.OMSStatuses.Queries.GetOMSStatuses;
-using Registery.Application.ComandAndQuery.Organizations.Commands.UpdateOrganization;
 using Registery.Application.ComandAndQuery.RosreestrStatuses.Queries.GetRosreestrStatuses;
 using Registery.Domain.Entities;
 using Registery.Models.Form;
@@ -99,8 +99,17 @@ namespace Registery.Controllers
             ViewBag.SelectListRosreestrStatus = selectorRosreestrStatus;
             ViewBag.SelectOMSStatus = seleсtorOMSStatus;
 
-            var result = _mediator.Send(new GetFormByIdQuery(id), CancellationToken.None);
+            var result = await _mediator.Send(new GetFormByIdQuery(id), CancellationToken.None);
             var updateModel = _mapper.Map<UpdateFormVM>(result);
+
+            if (User.IsInRole("ОМС"))
+            {
+                return View("UpdateFormOMS", updateModel);
+            }
+            if (User.IsInRole("Росреестр"))
+            {
+                return View("UpdateFormRosreestr", updateModel);
+            }
 
             return View(updateModel);
         }
@@ -110,7 +119,20 @@ namespace Registery.Controllers
         {
             if (!ModelState.IsValid) { return View(model); }
 
-            await _mediator.Send(_mapper.Map<UpdateOrganizationCommand>(model));
+            var addModel = _mapper.Map<UpdateFormCommand>(model);
+
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            if (User.IsInRole("Росреестр"))
+            {
+                addModel.LastModifiedDateRosreestr = DateTime.UtcNow;
+            }
+            if (User.IsInRole("ОМС"))
+            {
+                addModel.LastModifiedDateOMS = DateTime.UtcNow;
+                addModel.LastModifiedUserOMS = user?.LastName + " " + user?.FirstName + " " + user?.MiddleName;
+            }
+            await _mediator.Send(addModel);
             return RedirectToAction(nameof(GetForms), "Form");
         }
 

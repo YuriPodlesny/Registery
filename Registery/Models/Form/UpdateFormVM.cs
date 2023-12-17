@@ -27,5 +27,9 @@ namespace Registery.Models.Form
         [Display(Name = "Статус ОМС")]
         public Guid? OMSStatusId { get; set; }
 
+
+        public DateTime LastModifiedDateRosreestr { get; set; }
+        public DateTime LastModifiedDateOMS { get; set; }
+        public string? LastModifiedUserOMS { get; set; }
     }
 }
