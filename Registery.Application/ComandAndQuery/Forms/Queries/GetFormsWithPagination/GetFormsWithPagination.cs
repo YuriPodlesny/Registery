@@ -1,11 +1,6 @@
 ﻿using MediatR;
 using Registery.Application.Mapping;
 using Registery.Application.Mapping.FormDTO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Registery.Application.ComandAndQuery.Forms.Queries.GetFormsWithPagination
 {

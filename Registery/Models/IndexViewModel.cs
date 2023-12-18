@@ -1,6 +1,4 @@
-﻿using Registery.Domain.Entities;
-
-namespace Registery.Models
+﻿namespace Registery.Models
 {
     public class IndexViewModel<T>
         where T : class

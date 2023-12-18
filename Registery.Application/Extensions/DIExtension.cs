@@ -11,6 +11,7 @@ using Registery.Application.ComandAndQuery.Forms.Commands.DeleteForm;
 using Registery.Application.ComandAndQuery.Forms.Commands.UpdateForm;
 using Registery.Application.ComandAndQuery.Forms.Queries.GetForm;
 using Registery.Application.ComandAndQuery.Forms.Queries.GetForms;
+using Registery.Application.ComandAndQuery.Forms.Queries.GetFormsWithPagination;
 using Registery.Application.ComandAndQuery.GetOMSStatus.Queries.GetQueries;
 using Registery.Application.ComandAndQuery.OMSStatuses.Commands.AddOMSStatus;
 using Registery.Application.ComandAndQuery.OMSStatuses.Commands.DeleteOMSStatus;
@@ -26,6 +27,7 @@ using Registery.Application.ComandAndQuery.RosreestrStatuses.Commands.DeleteRosr
 using Registery.Application.ComandAndQuery.RosreestrStatuses.Commands.UpdateRosreestrStatus;
 using Registery.Application.ComandAndQuery.RosreestrStatuses.Queries.GetRosreestrStatus;
 using Registery.Application.ComandAndQuery.RosreestrStatuses.Queries.GetRosreestrStatuses;
+using Registery.Application.Mapping;
 using Registery.Application.Mapping.DistrictNumberDTO;
 using Registery.Application.Mapping.FormDTO;
 using Registery.Application.Mapping.OMSStatusDTO;
@@ -63,7 +65,8 @@ namespace Registery.Application.Extensions
                 .AddScoped<IRequestHandler<GetRosreestrStatusesQuery, List<RosreestrStatusDto>>, GetRosreestrStatusesQueryHandler>()
                 .AddScoped<IRequestHandler<AddDistrictNumberCommand, DistrictNumberDto>, AddDistrictNumberCommandHandler>()
                 .AddScoped<IRequestHandler<DeleteDistrictNumberCommand, Unit>, DeleteDistrictNumberCommandHandler>()
-                .AddScoped<IRequestHandler<UpdateDistrictNumberCommand, DistrictNumberDto>, UpdateDistrictNumberCommandHandler>();
+                .AddScoped<IRequestHandler<UpdateDistrictNumberCommand, DistrictNumberDto>, UpdateDistrictNumberCommandHandler>()
+                .AddScoped<IRequestHandler<GetFormsWithPagination, IndexPagination<FormDto>>, GetFormsWithPaginationHandler>();
         }
     }
 }

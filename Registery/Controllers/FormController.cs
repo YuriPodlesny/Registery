@@ -7,7 +7,7 @@ using Registery.Application.ComandAndQuery.Forms.Commands.AddForm;
 using Registery.Application.ComandAndQuery.Forms.Commands.DeleteForm;
 using Registery.Application.ComandAndQuery.Forms.Commands.UpdateForm;
 using Registery.Application.ComandAndQuery.Forms.Queries.GetForm;
-using Registery.Application.ComandAndQuery.Forms.Queries.GetForms;
+using Registery.Application.ComandAndQuery.Forms.Queries.GetFormsWithPagination;
 using Registery.Application.ComandAndQuery.OMSStatuses.Queries.GetOMSStatuses;
 using Registery.Application.ComandAndQuery.RosreestrStatuses.Queries.GetRosreestrStatuses;
 using Registery.Application.Mapping.FormDTO;
@@ -32,7 +32,7 @@ namespace Registery.Controllers
         [HttpGet]
         public async Task<IActionResult> GetForms(int pageSize = 10, int pageNumber = 1)
         {
-            var form = await _mediator.Send(new GetFormsQuery(pageSize, pageNumber), CancellationToken.None);
+            var form = await _mediator.Send(new GetFormsWithPagination(pageSize, pageNumber), CancellationToken.None);
 
             return View(form);
         }

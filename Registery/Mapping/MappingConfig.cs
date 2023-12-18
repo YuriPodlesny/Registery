@@ -9,12 +9,14 @@ using Registery.Application.ComandAndQuery.Organizations.Commands.AddOrganizatio
 using Registery.Application.ComandAndQuery.Organizations.Commands.UpdateOrganization;
 using Registery.Application.ComandAndQuery.RosreestrStatuses.Commands.AddRosreestrStatus;
 using Registery.Application.ComandAndQuery.RosreestrStatuses.Commands.UpdateRosreestrStatus;
+using Registery.Application.Mapping;
 using Registery.Application.Mapping.DistrictNumberDTO;
 using Registery.Application.Mapping.FormDTO;
 using Registery.Application.Mapping.OMSStatusDTO;
 using Registery.Application.Mapping.OrganizationDTO;
 using Registery.Application.Mapping.RosreestrStatusDTO;
 using Registery.Domain.Entities;
+using Registery.Models;
 using Registery.Models.Account;
 using Registery.Models.DistrictNumber;
 using Registery.Models.Form;
@@ -70,6 +72,8 @@ namespace Registery.Mapping
             CreateMap<User, UserVM>()
                 .ForMember("OrganizationName", opt => opt.MapFrom(c => c.Organization.Name))
                 .ReverseMap();
+
+            //CreateMap<IndexViewModel<FormDto>, IndexPagination<FormDto>>().ReverseMap();
         }
     }
 }
