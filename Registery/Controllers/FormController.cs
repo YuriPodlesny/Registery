@@ -10,9 +10,7 @@ using Registery.Application.ComandAndQuery.Forms.Queries.GetForm;
 using Registery.Application.ComandAndQuery.Forms.Queries.GetFormsWithPagination;
 using Registery.Application.ComandAndQuery.OMSStatuses.Queries.GetOMSStatuses;
 using Registery.Application.ComandAndQuery.RosreestrStatuses.Queries.GetRosreestrStatuses;
-using Registery.Application.Mapping.FormDTO;
 using Registery.Domain.Entities;
-using Registery.Models;
 using Registery.Models.Form;
 
 namespace Registery.Controllers
@@ -30,9 +28,10 @@ namespace Registery.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetForms(int pageSize = 10, int pageNumber = 1)
+        public async Task<IActionResult> GetForms(int page = 1)
         {
-            var form = await _mediator.Send(new GetFormsWithPagination(pageSize, pageNumber), CancellationToken.None);
+            int pageSize = 10;
+            var form = await _mediator.Send(new GetFormsWithPagination(pageSize, page), CancellationToken.None);
 
             return View(form);
         }

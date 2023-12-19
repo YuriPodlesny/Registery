@@ -4,6 +4,6 @@
         where T : class
     {
         public IEnumerable<T> Model { get; set; }
-        public PageModel PageViewModel { get; set; }
+        public PageModel PageModel { get; set; }
     }
 }
