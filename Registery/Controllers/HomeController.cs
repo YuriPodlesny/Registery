@@ -1,9 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Registery.Domain.Entities;
+﻿using Microsoft.AspNetCore.Mvc;
 using Registery.Models;
-using Registery.Models.Account;
 using System.Diagnostics;
 
 namespace Registery.Controllers
