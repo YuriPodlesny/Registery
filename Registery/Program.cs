@@ -19,7 +19,7 @@ builder.Services.AddAutoMapper(typeof(MappingConfig));
 builder.Services.AddScoped<IInitializer, UserInitializer>();
 
 builder.Services.AddTransient<IPrincipal>(
-    provider => provider.GetService<IHttpContextAccessor>().HttpContext.User);
+    provider => provider.GetService<IHttpContextAccessor>()!.HttpContext!.User);
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
@@ -62,7 +62,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Account}/{action=Login}/{id?}");
 
 app.Run();
 

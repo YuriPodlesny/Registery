@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Registery.Application.ComandAndQuery.DistrictNumbers.Commands.AddDistrictNumber;
 using Registery.Application.ComandAndQuery.DistrictNumbers.Commands.DeleteDistrictNumber;
@@ -10,6 +11,7 @@ using Registery.Models.DistrictNumber;
 
 namespace Registery.Controllers
 {
+    [Authorize]
     public class DistrictNumberController : Controller
     {
         private readonly IMediator _mediator;

@@ -1,20 +1,28 @@
 ﻿using AutoMapper;
+using ExcelDataReader;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Registery.Application.ComandAndQuery.DistrictNumbers.Queries.GetDistrictNamberByName;
 using Registery.Application.ComandAndQuery.DistrictNumbers.Queries.GetDistrictNambers;
 using Registery.Application.ComandAndQuery.Forms.Commands.AddForm;
 using Registery.Application.ComandAndQuery.Forms.Commands.DeleteForm;
 using Registery.Application.ComandAndQuery.Forms.Commands.UpdateForm;
 using Registery.Application.ComandAndQuery.Forms.Queries.GetForm;
 using Registery.Application.ComandAndQuery.Forms.Queries.GetFormsWithPagination;
+using Registery.Application.ComandAndQuery.OMSStatuses.Queries.GetOMSStatus;
 using Registery.Application.ComandAndQuery.OMSStatuses.Queries.GetOMSStatuses;
+using Registery.Application.ComandAndQuery.RosreestrStatuses.Queries.GetRosreestrStatus;
 using Registery.Application.ComandAndQuery.RosreestrStatuses.Queries.GetRosreestrStatuses;
 using Registery.Domain.Entities;
 using Registery.Models.Form;
+using Registry.Domain.Entities;
+using System.Text;
 
 namespace Registery.Controllers
 {
+    [Authorize]
     public class FormController : Controller
     {
         private readonly IMediator _mediator;
@@ -25,6 +33,76 @@ namespace Registery.Controllers
             _mediator = mediator;
             _mapper = mapper;
             _userManager = userManager;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UploadExcel(IFormFile file)
+        {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
+            if (file != null && file.Length > 0)
+            {
+                var uploudsFolder = $"{Directory.GetCurrentDirectory()}\\wwwroot\\Uploads\\";
+
+                if (!Directory.Exists(uploudsFolder))
+                {
+                    Directory.CreateDirectory(uploudsFolder);
+                }
+
+                var filePath = Path.Combine(uploudsFolder, file.FileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+
+                using (var stream = System.IO.File.Open(filePath, FileMode.Open, FileAccess.Read))
+                {
+                    using (var reader = ExcelReaderFactory.CreateReader(stream))
+                    {
+                        do
+                        {
+                            bool isHeaderSkipperd = false;
+                            while (reader.Read())
+                            {
+                                if (!isHeaderSkipperd)
+                                {
+                                    isHeaderSkipperd = true;
+                                    continue;
+                                }
+
+                                Form form = new Form();
+                                form.CadastralNumber = reader.GetValue(1).ToString();
+                                form.Address = reader.GetValue(2).ToString();
+                                form.StatusEGRN = reader.GetValue(3).ToString();
+                                form.LastModifiedDateRosreestr = Convert.ToDateTime(reader.GetValue(6));
+                                form.LastModifiedDateOMS = Convert.ToDateTime(reader.GetValue(8));
+                                form.LastModifiedUserOMS = reader.GetValue(7).ToString();
+                                form.DistrictNumberId = _mediator.Send(new GetDistrictNumberByValueQuery(reader.GetValue(0).ToString()!), CancellationToken.None).Result?.Id;
+                                form.RosreestrStatusId = _mediator.Send(new GetRosreestrStatusByValueQuery(reader.GetValue(4).ToString()!), CancellationToken.None).Result?.Id;
+                                form.OMSStatusId = _mediator.Send(new GetOMSStatusByValueQuery(reader.GetValue(5).ToString()!), CancellationToken.None).Result?.Id;
+
+                                var formFromDb = await _mediator.Send(new GetFormByCadastralNumberQuery(form.CadastralNumber!));
+                                if (formFromDb == null)
+                                {
+                                    await _mediator.Send(_mapper.Map<AddFormCommand>(form), CancellationToken.None);
+                                }
+                                else
+                                {
+                                    form.Id = formFromDb.Id;
+                                    await _mediator.Send(new DeleteFormCommand(form.Id), CancellationToken.None);
+                                    await _mediator.Send(_mapper.Map<AddFormCommand>(form), CancellationToken.None);
+
+
+                                    //await _mediator.Send(_mapper.Map<UpdateFormCommand>(form), CancellationToken.None);
+                                }
+                            }
+                        } while (reader.NextResult());
+                    }
+                }
+            }
+
+            return RedirectToAction(nameof(GetForms));
         }
 
         [HttpGet]

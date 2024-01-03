@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Registery.Application.ComandAndQuery.DistrictNumbers.Commands.AddDistrictNumber;
 using Registery.Application.ComandAndQuery.DistrictNumbers.Commands.DeleteDistrictNumber;
 using Registery.Application.ComandAndQuery.DistrictNumbers.Commands.UpdateDistrictNumber;
+using Registery.Application.ComandAndQuery.DistrictNumbers.Queries.GetDistrictNamberByName;
 using Registery.Application.ComandAndQuery.DistrictNumbers.Queries.GetDistrictNambers;
 using Registery.Application.ComandAndQuery.DistrictNumbers.Queries.GetDistrictNumber;
 using Registery.Application.ComandAndQuery.DistrictNumbers.Queries.GetDistrictNumbers;
@@ -16,6 +17,7 @@ using Registery.Application.ComandAndQuery.GetOMSStatus.Queries.GetQueries;
 using Registery.Application.ComandAndQuery.OMSStatuses.Commands.AddOMSStatus;
 using Registery.Application.ComandAndQuery.OMSStatuses.Commands.DeleteOMSStatus;
 using Registery.Application.ComandAndQuery.OMSStatuses.Commands.UpdateOMSStatus;
+using Registery.Application.ComandAndQuery.OMSStatuses.Queries.GetOMSStatus;
 using Registery.Application.ComandAndQuery.OMSStatuses.Queries.GetOMSStatuses;
 using Registery.Application.ComandAndQuery.Organizations.Commands.AddOrganization;
 using Registery.Application.ComandAndQuery.Organizations.Commands.DeleteOrganization;
@@ -66,7 +68,11 @@ namespace Registery.Application.Extensions
                 .AddScoped<IRequestHandler<AddDistrictNumberCommand, DistrictNumberDto>, AddDistrictNumberCommandHandler>()
                 .AddScoped<IRequestHandler<DeleteDistrictNumberCommand, Unit>, DeleteDistrictNumberCommandHandler>()
                 .AddScoped<IRequestHandler<UpdateDistrictNumberCommand, DistrictNumberDto>, UpdateDistrictNumberCommandHandler>()
-                .AddScoped<IRequestHandler<GetFormsWithPagination, IndexPagination<FormDto>>, GetFormsWithPaginationHandler>();
+                .AddScoped<IRequestHandler<GetFormsWithPagination, IndexPagination<FormDto>>, GetFormsWithPaginationHandler>()
+                .AddScoped<IRequestHandler<GetDistrictNumberByValueQuery, DistrictNumberDto?>, GetDistrictNumberByValueQueryHandler>()
+                .AddScoped<IRequestHandler<GetRosreestrStatusByValueQuery, RosreestrStatusDto?>, GetRosreestrStatusByValueQueryHandler>()
+                .AddScoped<IRequestHandler<GetOMSStatusByValueQuery, OMSStatusDto?>, GetOMSStatusByValueQueryHandler>()
+                .AddScoped<IRequestHandler<GetFormByCadastralNumberQuery, FormDto?>, GetFormByCadastralNumberQueryHandler>();
         }
     }
 }

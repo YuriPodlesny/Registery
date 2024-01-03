@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Registery.Application.ComandAndQuery.DistrictNumbers.Queries.GetDistrictNambers;
 using Registery.Application.ComandAndQuery.Organizations.Commands.AddOrganization;
@@ -11,6 +12,7 @@ using Registery.Models.Organization;
 
 namespace Registery.Controllers
 {
+    [Authorize]
     public class OrganizationController : Controller
     {
         private readonly IMediator _mediator;

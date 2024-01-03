@@ -4,25 +4,29 @@
     ViewBag.Title = "Справочник «Организация»";
 }
 
-<h2>Справочник «Организация»</h2>
+<div class="container">
+    <h2>Справочник «Организация»</h2>
 
-<a asp-action="CreateOrganization" class="btn btn-success btn-sm">Добавить</a>
+    <a asp-action="CreateOrganization" class="btn btn-success btn-sm mb-1">Добавить</a>
 
-<table class="table">
-    <tr><th>Название</th><th>ИНН</th><th>Номер района</th><th>Удалена</th><th></th></tr>
-    @foreach (var organization in Model)
-    {
-        <tr>
-            <td>@organization.Name</td>
-            <td>@organization.INN</td>
-            <td>@organization.DistrictNumber?.Value</td>
-            <td>@(organization.Delete == false ? "" : "Удалена")</td>
-            <td>
-                <form method="post" asp-controller="Organization" asp-action="DeleteOrganization" asp-route-id="@organization.Id">
-                    <a class="btn btn-sm btn-primary" asp-controller="Organization" asp-action="UpdateOrganization" asp-route-id="@organization.Id">Изменить</a>
-                    <button type="submit" class="btn btn-sm btn-danger">Удалить</button>
-                </form>
-            </td>
-        </tr>
-    }
-</table>
+    <table class="table table-hover">
+        <thead class="table-light ">
+            <tr><th>Название</th><th>ИНН</th><th>Номер района</th><th>Удалена</th><th></th></tr>
+        </thead>
+        @foreach (var organization in Model)
+        {
+            <tr>
+                <td>@organization.Name</td>
+                <td>@organization.INN</td>
+                <td>@organization.DistrictNumber?.Value</td>
+                <td>@(organization.Delete == false ? "" : "Удалена")</td>
+                <td>
+                    <form method="post" asp-controller="Organization" asp-action="DeleteOrganization" asp-route-id="@organization.Id">
+                        <a class="btn btn-sm btn-primary" asp-controller="Organization" asp-action="UpdateOrganization" asp-route-id="@organization.Id">Изменить</a>
+                        <button type="submit" class="btn btn-sm btn-danger">Удалить</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </table>
+</div>

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Registery.Application.ComandAndQuery.GetOMSStatus.Queries.GetQueries;
 using Registery.Application.ComandAndQuery.OMSStatuses.Commands.AddOMSStatus;
@@ -10,6 +11,7 @@ using Registery.Models.OMSStatuses;
 
 namespace Registery.Controllers
 {
+    [Authorize]
     public class OMSStatusController : Controller
     {
         private readonly IMediator _mediator;

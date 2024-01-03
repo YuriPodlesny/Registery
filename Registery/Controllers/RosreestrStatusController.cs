@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Registery.Application.ComandAndQuery.RosreestrStatuses.Commands.AddRosreestrStatus;
 using Registery.Application.ComandAndQuery.RosreestrStatuses.Commands.DeleteRosreestrStatus;
@@ -10,6 +11,7 @@ using Registery.Models.RosreestrStatus;
 
 namespace Registery.Controllers
 {
+    [Authorize]
     public class RosreestrStatusController : Controller
     {
         private readonly IMediator _mediator;

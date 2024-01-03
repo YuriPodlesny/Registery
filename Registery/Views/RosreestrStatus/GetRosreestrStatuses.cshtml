@@ -4,23 +4,27 @@
     ViewBag.Title = "Справочник «Статус Росреестра»";
 }
 
-<h2>Справочник «Статус Росреестра»</h2>
+<div class="container">
+    <h2>Справочник «Статус Росреестра»</h2>
 
-<a asp-action="CreateRosreestrStatus" class="btn btn-success btn-sm">Добавить</a>
+    <a asp-action="CreateRosreestrStatus" class="btn btn-success btn-sm mb-1">Добавить</a>
 
-<table class="table">
-    <tr><th>Значение</th><th>Удален</th><th></th></tr>
-    @foreach (var rosreestrStatus in Model)
-    {
-        <tr>
-            <td>@rosreestrStatus.Value</td>
-            <td>@(rosreestrStatus.Delete == false ? "" : "Удален")</td>
-            <td>
-                <form method="post" asp-controller="RosreestrStatus" asp-action="DeleteRosreestrStatus" asp-route-id="@rosreestrStatus.Id">
-                    <a class="btn btn-sm btn-primary" asp-controller="RosreestrStatus" asp-action="UpdateRosreestrStatus" asp-route-id="@rosreestrStatus.Id">Изменить</a>
-                    <button type="submit" class="btn btn-sm btn-danger">Удалить</button>
-                </form>
-            </td>
-        </tr>
-    }
-</table>
+    <table class="table table-hover">
+        <thead class="table-light">
+            <tr><th>Значение</th><th>Удален</th><th></th></tr>
+        </thead>  
+        @foreach (var rosreestrStatus in Model)
+        {
+            <tr>
+                <td>@rosreestrStatus.Value</td>
+                <td>@(rosreestrStatus.Delete == false ? "" : "Удален")</td>
+                <td>
+                    <form method="post" asp-controller="RosreestrStatus" asp-action="DeleteRosreestrStatus" asp-route-id="@rosreestrStatus.Id">
+                        <a class="btn btn-sm btn-primary" asp-controller="RosreestrStatus" asp-action="UpdateRosreestrStatus" asp-route-id="@rosreestrStatus.Id">Изменить</a>
+                        <button type="submit" class="btn btn-sm btn-danger">Удалить</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </table>
+</div>

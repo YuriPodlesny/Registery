@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -25,6 +26,7 @@ namespace Registery.Controllers
             _mapper = mapper;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Users()
         {
@@ -32,6 +34,7 @@ namespace Registery.Controllers
             return View(_mapper.Map<List<UserVM>>(usersFromDb));
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Register(RegisterVM registerVM)
         {
@@ -51,6 +54,7 @@ namespace Registery.Controllers
             return View(registerVM);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> RegisterPost(RegisterVM registerVM)
         {
@@ -85,7 +89,7 @@ namespace Registery.Controllers
         {
             if (User.Identity!.IsAuthenticated)
             {
-                return RedirectToAction(nameof(Index), "Home");
+                return RedirectToAction("GetForms", "Form");
             }
             return View(new LoginVM { ReturnUrl = returnUrl });
         }
@@ -105,7 +109,7 @@ namespace Registery.Controllers
                     }
                     else
                     {
-                        return RedirectToAction(nameof(Index), "Home");
+                        return RedirectToAction("GetForms", "Form");
                     }
                 }
                 else
@@ -117,11 +121,12 @@ namespace Registery.Controllers
             return View(model);
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction(nameof(Index), "Home");
+            return RedirectToAction(nameof(Login), "Account");
         }
     }
 }

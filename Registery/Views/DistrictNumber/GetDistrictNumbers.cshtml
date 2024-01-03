@@ -4,23 +4,27 @@
     ViewBag.Title = "Справочник «Номер района»";
 }
 
-<h2>Справочники «Номер района»</h2>
+<div class="container">
+    <h2>Справочники «Номер района»</h2>
 
-<a asp-action="CreateDistrictNumber" class="btn btn-success btn-sm">Добавить</a>
+    <a asp-action="CreateDistrictNumber" class="btn btn-success btn-sm mb-1">Добавить</a>
 
-<table class="table">
-    <tr><th>Значение</th><th>Удален</th><th></th></tr>
-    @foreach (var districtNumber in Model)
-    {
-        <tr>
-            <td>@districtNumber.Value</td>
-            <td>@(districtNumber.Delete == false ? "" : "Удален")</td>
-            <td>
-                <form method="post" asp-controller="DistrictNumber" asp-action="DeleteDistrictNumber" asp-route-id="@districtNumber.Id">
-                    <a class="btn btn-sm btn-primary" asp-controller="DistrictNumber" asp-action="UpdateDistrictNumber" asp-route-id="@districtNumber.Id">Изменить</a>
-                    <button type="submit" class="btn btn-sm btn-danger">Удалить</button>
-                </form>
-            </td>
-        </tr>
-    }
-</table>
+    <table class="table table-hover">
+        <thead class="table-light">
+            <tr><th>Значение</th><th>Удален</th><th></th></tr>
+        </thead>
+        @foreach (var districtNumber in Model)
+        {
+            <tr>
+                <td>@districtNumber.Value</td>
+                <td>@(districtNumber.Delete == false ? "" : "Удален")</td>
+                <td>
+                    <form method="post" asp-controller="DistrictNumber" asp-action="DeleteDistrictNumber" asp-route-id="@districtNumber.Id">
+                        <a class="btn btn-sm btn-primary" asp-controller="DistrictNumber" asp-action="UpdateDistrictNumber" asp-route-id="@districtNumber.Id">Изменить</a>
+                        <button type="submit" class="btn btn-sm btn-danger">Удалить</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </table>
+</div>

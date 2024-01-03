@@ -5,24 +5,41 @@
 }
 
 <h2>Форма ввода</h2>
-@* @if (User.IsInRole("Администратор"))
-{ *@
-    <a asp-action="CreateForm" class="btn btn-success btn-sm">Добавить</a>
-@* } *@
+@if (User.IsInRole(SD.Role.Администратор.ToString()))
+{
+    <a asp-action="CreateForm" class="btn btn-success btn-sm mb-1">Добавить</a>
+}
 
-<table class="table">
-    <tr>
-        <th>Район</th>
-        <th>Кадастровый номер</th>
-        <th>Адрес</th>
-        <th>Состояние в ЕГРН</th>
-        <th>Статус Росреестр</th>
-        <th>Статус ОМС</th>
-        <th>Последнее изменение Росреестр</th>
-        <th>Последнее изменение ОМС</th>
-        <th>Последнее изменение пользователь ОМС</th>
-        <th></th>
-    </tr>
+<form method="post" enctype="multipart/form-data">
+    <div class="row">
+        <label>Выберите файл</label>
+        <input type="file" name="file" />
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-3 mb-1">
+            <input type="submit" asp-controller="Form" asp-action="UploadExcel" class="btn btn-dark" value="Загрузить Excel файл" />
+        </div>
+    </div>
+</form>
+
+
+<table class="table table-hover">
+    <tbody class="table-light">
+        <tr>
+            <th>Район</th>
+            <th>Кадастровый номер</th>
+            <th>Адрес</th>
+            <th>Состояние в ЕГРН</th>
+            <th>Статус Росреестр</th>
+            <th>Статус ОМС</th>
+            <th>Последнее изменение Росреестр</th>
+            <th>Последнее изменение ОМС</th>
+            <th>Последнее изменение пользователь ОМС</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </tbody>
     @foreach (var form in Model.Model)
     {
         <tr>
@@ -35,13 +52,15 @@
             <td>@form.LastModifiedDateRosreestr</td>
             <td>@form.LastModifiedDateOMS</td>
             <td>@form.LastModifiedUserOMS</td>
-            @if (User.IsInRole("Администратор"))
+            @if (User.IsInRole(SD.Role.Администратор.ToString()))
             {
                 <td>
                     <form method="post" asp-controller="Form" asp-action="DeleteForm" asp-route-id="@form.Id">
-                        <a class="btn btn-sm btn-primary" asp-controller="Form" asp-action="UpdateForm" asp-route-id="@form.Id">Изменить</a>
                         <button type="submit" class="btn btn-sm btn-danger">Удалить</button>
                     </form>
+                </td>
+                <td>
+                    <a class="btn btn-sm btn-primary" asp-controller="Form" asp-action="UpdateForm" asp-route-id="@form.Id">Изменить</a>
                 </td>
             }
             @if (User.IsInRole(SD.Role.ОМС.ToString()))
@@ -54,7 +73,7 @@
             {
                 <td>
                     <a class="btn btn-sm btn-primary" asp-controller="Form" asp-action="UpdateForm" asp-route-id="@form.Id">Изменить</a>
-                </td> 
+                </td>
             }
         </tr>
     }
