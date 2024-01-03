@@ -92,9 +92,6 @@ namespace Registery.Controllers
                                     form.Id = formFromDb.Id;
                                     await _mediator.Send(new DeleteFormCommand(form.Id), CancellationToken.None);
                                     await _mediator.Send(_mapper.Map<AddFormCommand>(form), CancellationToken.None);
-
-
-                                    //await _mediator.Send(_mapper.Map<UpdateFormCommand>(form), CancellationToken.None);
                                 }
                             }
                         } while (reader.NextResult());
