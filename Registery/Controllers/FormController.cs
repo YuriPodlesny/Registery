@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ClosedXML.Excel;
 using ExcelDataReader;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -10,14 +11,17 @@ using Registery.Application.ComandAndQuery.Forms.Commands.AddForm;
 using Registery.Application.ComandAndQuery.Forms.Commands.DeleteForm;
 using Registery.Application.ComandAndQuery.Forms.Commands.UpdateForm;
 using Registery.Application.ComandAndQuery.Forms.Queries.GetForm;
+using Registery.Application.ComandAndQuery.Forms.Queries.GetForms;
 using Registery.Application.ComandAndQuery.Forms.Queries.GetFormsWithPagination;
 using Registery.Application.ComandAndQuery.OMSStatuses.Queries.GetOMSStatus;
 using Registery.Application.ComandAndQuery.OMSStatuses.Queries.GetOMSStatuses;
 using Registery.Application.ComandAndQuery.RosreestrStatuses.Queries.GetRosreestrStatus;
 using Registery.Application.ComandAndQuery.RosreestrStatuses.Queries.GetRosreestrStatuses;
+using Registery.Application.Mapping.FormDTO;
 using Registery.Domain.Entities;
 using Registery.Models.Form;
 using Registry.Domain.Entities;
+using System.Data;
 using System.Text;
 
 namespace Registery.Controllers
@@ -34,6 +38,58 @@ namespace Registery.Controllers
             _mapper = mapper;
             _userManager = userManager;
         }
+
+        [HttpGet]
+        public async Task<FileResult> DownloudExcel()
+        {
+            var formFromDb = await _mediator.Send(new GetFormsQuery(), CancellationToken.None);
+            var fileName = $"реестр {DateTime.Now}.xlsx";
+            return GenerateExcel(fileName, formFromDb);
+        }
+
+        private FileResult GenerateExcel(string fileName, List<FormDto> forms)
+        {
+            DataTable dataTable = new DataTable("Form");
+            dataTable.Columns.AddRange(new DataColumn[]
+            {
+                new DataColumn("Район"),
+                new DataColumn("Кадастровый номер"),
+                new DataColumn("Адрес"),
+                new DataColumn("Состояние в ЕГРН"),
+                new DataColumn("Статус Росреестр"),
+                new DataColumn("Статус ОМС"),
+                new DataColumn("Дата изменения (Росреестр)"),
+                new DataColumn("Автор изменения (ОМС)"),
+                new DataColumn("Дата изменения (ОМС)")
+            });
+
+            foreach (var form in forms)
+            {
+                dataTable.Rows.Add(
+                    form.DistrictNumber?.Value,
+                    form.CadastralNumber,
+                    form.Address,
+                    form.StatusEGRN,
+                    form.RosreestrStatus?.Value,
+                    form.OMSStatus?.Value,
+                    form.LastModifiedDateRosreestr,
+                    form.LastModifiedUserOMS,
+                    form.LastModifiedDateOMS
+                    );
+            }
+
+            using (XLWorkbook wb = new())
+            {
+                wb.Worksheets.Add(dataTable);
+                using(MemoryStream stream = new())
+                {
+                    wb.SaveAs(stream);
+
+                    return File(stream.ToArray(), "application/vdn.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+                }
+            }
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> UploadExcel(IFormFile file)
@@ -95,9 +151,13 @@ namespace Registery.Controllers
                                 }
                             }
                         } while (reader.NextResult());
+
+                        ViewBag.Message = "success";
                     }
                 }
             }
+            else
+                ViewBag.Message = "empty";
 
             return RedirectToAction(nameof(GetForms));
         }

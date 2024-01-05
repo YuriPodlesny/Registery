@@ -5,24 +5,44 @@
 }
 
 <h2>Форма ввода</h2>
+
+@if (!string.IsNullOrEmpty(ViewBag.Message) && ViewBag.Message == "success")
+{
+    <div class="alert alert-success" role="alert">
+        Данные успешно загружены
+    </div>
+}
+else if (!string.IsNullOrEmpty(ViewBag.Message) && ViewBag.Message == "empty")
+{
+    <div class="alert alert-warning" role="alert">
+        Файл пуст
+    </div>
+}
+
 @if (User.IsInRole(SD.Role.Администратор.ToString()))
 {
     <a asp-action="CreateForm" class="btn btn-success btn-sm mb-1">Добавить</a>
 }
 
-<form method="post" enctype="multipart/form-data">
-    <div class="row">
-        <label>Выберите файл</label>
-        <input type="file" name="file" />
+<div class="row">
+    <div class="col">
+        <form method="post" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-3 mb-2">
+                    <label>Выберите файл</label>
+                    <input type="file" name="file" />
+                </div>
+                <div class="col-1 mb-1">
+                    <input type="submit" asp-controller="Form" asp-action="UploadExcel" class="btn btn-primary" value="Загрузить Excel файл" />
+                </div>
+            </div>
+        </form>
     </div>
-    <br />
-    <div class="row">
-        <div class="col-3 mb-1">
-            <input type="submit" asp-controller="Form" asp-action="UploadExcel" class="btn btn-dark" value="Загрузить Excel файл" />
-        </div>
-    </div>
-</form>
 
+    <div class="col mb-1">
+        <a class="btn btn-warning" asp-controller="Form" asp-action="DownloudExcel">Скачать Excel файл</a>
+    </div>
+</div>
 
 <table class="table table-hover">
     <tbody class="table-light">

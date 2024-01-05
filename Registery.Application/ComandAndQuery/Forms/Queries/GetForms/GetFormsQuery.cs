@@ -8,6 +8,10 @@ namespace Registery.Application.ComandAndQuery.Forms.Queries.GetForms
         public int PageSize { get; set; }
         public int PageNumber { get; set; }
 
+        public GetFormsQuery() 
+        { 
+
+        }
         public GetFormsQuery(int PageSize, int PageNumber) 
         { 
             this.PageSize = PageSize;
