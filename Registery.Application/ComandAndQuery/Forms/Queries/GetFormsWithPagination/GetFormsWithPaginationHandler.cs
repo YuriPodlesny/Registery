@@ -26,7 +26,12 @@ namespace Registery.Application.ComandAndQuery.Forms.Queries.GetFormsWithPaginat
             IQueryable<Form> formFromDb = _db.Forms
                 .Include(e => e.DistrictNumber)
                 .Include(e => e.RosreestrStatus)
-                .Include(e => e.OMSStatus);
+                .Include(e => e.OMSStatus).AsQueryable();
+
+            if (request.SearchText != "" && request.SearchText != null)
+            {
+                formFromDb = formFromDb.Where(e => e.CadastralNumber!.Contains(request.SearchText)).AsQueryable();
+            }
 
             var count = await formFromDb.CountAsync();
             var items = await formFromDb.Skip((request.PageNumber - 1) * pageSize).Take(pageSize).ToListAsync();

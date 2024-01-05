@@ -6,16 +6,18 @@
 
 <h2>Форма ввода</h2>
 
-@if (!string.IsNullOrEmpty(ViewBag.Message) && ViewBag.Message == "success")
+﻿@if (!string.IsNullOrEmpty(ViewBag.Message) && ViewBag.Message == "success")
 {
-    <div class="alert alert-success" role="alert">
-        Данные успешно загружены
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        Файл успешно загружен
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 }
 else if (!string.IsNullOrEmpty(ViewBag.Message) && ViewBag.Message == "empty")
 {
-    <div class="alert alert-warning" role="alert">
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
         Файл пуст
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 }
 
@@ -24,24 +26,25 @@ else if (!string.IsNullOrEmpty(ViewBag.Message) && ViewBag.Message == "empty")
     <a asp-action="CreateForm" class="btn btn-success btn-sm mb-1">Добавить</a>
 }
 
-<div class="row">
-    <div class="col">
-        <form method="post" enctype="multipart/form-data">
-            <div class="row">
-                <div class="col-3 mb-2">
-                    <label>Выберите файл</label>
-                    <input type="file" name="file" />
-                </div>
-                <div class="col-1 mb-1">
-                    <input type="submit" asp-controller="Form" asp-action="UploadExcel" class="btn btn-primary" value="Загрузить Excel файл" />
-                </div>
+<div class="container-fluid justify-content-start">
+    <form method="post" enctype="multipart/form-data">
+        <div class="d-flex flex-row bd-highlight mb-3">
+            <div class="bd-highlight">
+                <label>Выберите файл</label>
+                <input type="file" name="file" />
             </div>
-        </form>
-    </div>
-
-    <div class="col mb-1">
-        <a class="btn btn-warning" asp-controller="Form" asp-action="DownloudExcel">Скачать Excel файл</a>
-    </div>
+            <div class="bd-highlight">
+                <input type="submit" asp-controller="Form" asp-action="UploadExcel" class="btn btn-primary" value="Загрузить Excel файл" />
+            </div>
+            <div class="mx-2 bd-highlight">
+                <a class="btn btn-warning" asp-controller="Form" asp-action="DownloudExcel">Скачать Excel файл</a>
+            </div>
+        </div>
+    </form>
+    <form method="get" class="d-flex mb-2">
+        <input class="form-control me-2" name="searchText" type="search" placeholder="Кадастровый номер" value="@ViewBag.SearchText" aria-label="Search">
+        <input type="submit" asp-controller="Form" asp-action="GetForms" class="btn btn-light" value="Найти" />
+    </form>
 </div>
 
 <table class="table table-hover">
@@ -100,3 +103,4 @@ else if (!string.IsNullOrEmpty(ViewBag.Message) && ViewBag.Message == "empty")
 </table>
 
 <page-link page-model="Model.PageModel" page-action="GetForms"></page-link>
+

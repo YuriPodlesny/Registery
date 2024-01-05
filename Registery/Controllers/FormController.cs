@@ -81,7 +81,7 @@ namespace Registery.Controllers
             using (XLWorkbook wb = new())
             {
                 wb.Worksheets.Add(dataTable);
-                using(MemoryStream stream = new())
+                using (MemoryStream stream = new())
                 {
                     wb.SaveAs(stream);
 
@@ -94,6 +94,7 @@ namespace Registery.Controllers
         [HttpPost]
         public async Task<IActionResult> UploadExcel(IFormFile file)
         {
+            var isSuccess = "";
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
             if (file != null && file.Length > 0)
@@ -152,22 +153,23 @@ namespace Registery.Controllers
                             }
                         } while (reader.NextResult());
 
-                        ViewBag.Message = "success";
+                        isSuccess = "success";
                     }
                 }
             }
             else
-                ViewBag.Message = "empty";
+                isSuccess = "empty";
 
-            return RedirectToAction(nameof(GetForms));
+            return RedirectToAction(nameof(GetForms), new { isSuccess });
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetForms(int page = 1)
+        public async Task<IActionResult> GetForms(string searchText = "", int page = 1, string isSuccess = "")
         {
+            ViewBag.Message = isSuccess;
             int pageSize = 10;
-            var form = await _mediator.Send(new GetFormsWithPagination(pageSize, page), CancellationToken.None);
-
+            var form = await _mediator.Send(new GetFormsWithPagination(pageSize, page, searchText), CancellationToken.None);
+            ViewBag.SearchText = searchText;
             return View(form);
         }
 

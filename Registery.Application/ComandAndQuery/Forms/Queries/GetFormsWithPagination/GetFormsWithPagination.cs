@@ -8,11 +8,13 @@ namespace Registery.Application.ComandAndQuery.Forms.Queries.GetFormsWithPaginat
     {
         public int PageSize { get; set; }
         public int PageNumber { get; set; }
+        public string? SearchText {  get; set; }
 
-        public GetFormsWithPagination(int PageSize, int PageNumber)
+        public GetFormsWithPagination(int PageSize, int PageNumber, string SearchText)
         {
             this.PageSize = PageSize;
             this.PageNumber = PageNumber;
+            this.SearchText = SearchText;
         }
     }
 }
